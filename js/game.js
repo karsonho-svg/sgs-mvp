@@ -3,7 +3,6 @@ import { ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.6.0/fir
 import { renderCard, renderGeneral } from "./render.js";
 import { deck } from "./deck.js";
 import { generals } from "./heroes.js";
-import { renderCard, renderGeneral } from "./render.js";
 //     deck.forEach(card => {
 //       set(ref(database, 'deck/' + card.id), card)
 //         .then(() => console.log(`${card.name} 存入成功 ✅`))
