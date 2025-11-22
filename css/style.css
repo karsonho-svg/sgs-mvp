@@ -19,7 +19,7 @@ img {
   height: 420px;
   background: #00000020;
   border-radius: 12px;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   display: flex;
   flex-direction: row;
@@ -143,7 +143,7 @@ img {
   position: absolute;
   top: 10px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-60%);
   padding: 10px 14px;
   width: 260px;
   background: rgba(0,0,0,0.85);
