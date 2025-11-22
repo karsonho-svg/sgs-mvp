@@ -1,9 +1,11 @@
  /* 停用 iOS 長按行為 */
   /* Testing*/
-* {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
+.general-card,
+.card,
+img {
   user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 img {
@@ -141,7 +143,7 @@ img {
   position: absolute;
   top: 10px;
   left: 50%;
-  transform: translateX(-60%);
+  transform: translateX(-50%);
   padding: 10px 14px;
   width: 260px;
   background: rgba(0,0,0,0.85);
@@ -156,7 +158,8 @@ img {
 
   .card-effect-box {
   position: absolute;
-  bottom: 105%;
+  bottom: 100%;
+  margin-bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
   padding: 8px 12px;
