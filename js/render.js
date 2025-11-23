@@ -106,14 +106,8 @@ function renderGeneral(g) {
   area.insertAdjacentHTML("beforeend", html);
 
   addGeneralPressEffect(area.lastElementChild);
-}
-
-
-
-
-
-
-  function renderCard(card) {
+}   // ←←←⭐⭐⭐ 這裡結束才對！⭐⭐⭐
+function renderCard(card) {
   // 1️⃣ 花色顏色（紅心、方塊紅色，其他黑色）
   const suitColor = (card.suit === "♥" || card.suit === "♦") ? "red" : "black";
 
