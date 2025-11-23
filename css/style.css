@@ -292,10 +292,10 @@ img {
 /* 裁切範圍（避免碰到上面的白色透明區）*/
 .general-art-wrapper {
   position: absolute;
-  top: 4%;       /* 🔥 你可以調 3%~5%，讓上邊剛好對齊 */
+  top: 3%;       /* 🔥 你可以調 3%~5%，讓上邊剛好對齊 */
   left: 0;
   width: 100%;
-  height: 96%;   /* 🔥 調 95~97%，讓下面不要超出 */
+  height: 94%;   /* 🔥 調 95~97%，讓下面不要超出 */
   overflow: hidden;
 }
 
