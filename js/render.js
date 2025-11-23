@@ -83,33 +83,30 @@ function renderGeneral(g) {
     .map(s => `【${s.name}】${s.description}`)
     .join("<br><br>");
 
+  const html = `
+    <div class="general-card"
+         style="background-image: url('sgs-images/photos/back/${frame}'); background-size: cover;">
 
-
-  document.getElementById("general-area")
-    .insertAdjacentHTML("beforeend", html);
-
-  addGeneralPressEffect(
-    document.getElementById("general-area").lastElementChild
-  );
-}
-const html = `
-  <div class="general-card"
-       style="background-image: url('sgs-images/photos/back/${frame}'); background-size: cover;">
-
-    <div class="general-side">
-      <div class="general-name-vert">${g.name}</div>
-      <div class="hp-area">${hpHTML}</div>
-    </div>
-
-    <div class="general-main">
-      <div class="general-art-wrapper">
-        <img class="general-art" src="${imgPath}">
+      <div class="general-side">
+        <div class="general-name-vert">${g.name}</div>
+        <div class="hp-area">${hpHTML}</div>
       </div>
-      <div class="skill-box">${skillText}</div>
-    </div>
 
-  </div>
-`;
+      <div class="general-main">
+        <div class="general-art-wrapper">
+          <img class="general-art" src="${imgPath}">
+        </div>
+        <div class="skill-box">${skillText}</div>
+      </div>
+
+    </div>
+  `;
+
+  const area = document.getElementById("general-area");
+  area.insertAdjacentHTML("beforeend", html);
+
+  addGeneralPressEffect(area.lastElementChild);
+}
 
 
 
