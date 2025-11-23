@@ -282,3 +282,29 @@ img {
     transform: translateY(2px);
     box-shadow: 0 2px 0 #8b6b2a, 0 4px 8px rgba(0,0,0,0.4);
   }
+  /* === 調整左側：名字 & 勾玉 === */
+
+/* 武將名字（往左移 + 稍微往下移一點） */
+.general-side .general-name-vert {
+  margin-left: -6px;     /* ⭐ 向左 */
+  margin-top: 18px;      /* ⭐ 稍微往下 */
+}
+
+/* 勾玉整排往左 */
+.general-side .hp-area {
+  margin-left: -8px;     /* ⭐ 左移 */
+}
+
+
+/* === 調整右側圖片大小 & 位置 === */
+
+/* 讓武將圖不會溢出，而且稍微縮小 & 左移 */
+.general-main .general-art {
+  position: absolute;
+  top: 0;
+  left: -12px;          /* ⭐ 向左一點（避免靠太右） */
+  width: 108%;          /* ⭐ 讓圖 cover 右側紅色框 */
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0 12px 12px 0;
+}
