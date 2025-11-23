@@ -299,8 +299,8 @@ img {
 
 .general-main .general-art {
   width: 100%;
-  height: 120%;         /* ⭐ 放大圖片 → 才能裁掉上下 */
+  height: 130%;         /* ⭐ 放大圖片 → 才能裁掉上下 */
   object-fit: cover;    /* ⭐ 保持比例並填滿區塊 */
-  object-position: 40% 35%;  /* ⭐ 向上移動 20px（等於裁掉上面）*/
-  transform: translate(-30px, 20px);
+  object-position: 30% -20px;  /* ⭐ 向上移動 20px（等於裁掉上面）*/
+ 
 }
