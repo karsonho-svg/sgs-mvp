@@ -325,10 +325,10 @@ img {
 /* ===== 新增：右側圖片可視範圍 ===== */
 .general-art-wrapper {
   position: absolute;
-  top: 8%;         /* 🔥 往下移，避開上面白色區塊 */
+  top: 15%;         /* 🔥 往下移，避開上面白色區塊 */
   left: 0;
   width: 100%;
-  height: 92%;     /* 🔥 防止圖片進入底圖的白色底邊 */
+  height: 85%;     /* 🔥 防止圖片進入底圖的白色底邊 */
   overflow: hidden; /* 🔥 裁切上下溢出的部分 */
 }
 
