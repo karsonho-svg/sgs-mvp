@@ -72,6 +72,7 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;     /* 🔥關鍵：填滿右側區域 */
+  object-position: 30% 65%;
   object-position: center; 
   position: absolute;
   top: 0;
@@ -303,7 +304,7 @@ img {
 .general-main {
   position: relative;
   width: 77%;          /* 右側區塊本來就佔 77% 左右 */
-  height: 90%;
+  height: 100%;
   overflow: hidden;     /* ⭐ 關鍵：把超出範圍的地方裁掉 */
 }
 
@@ -311,5 +312,5 @@ img {
   width: 100%;
   height: 120%;         /* ⭐ 放大圖片 → 才能裁掉上下 */
   object-fit: cover;    /* ⭐ 保持比例並填滿區塊 */
-  object-position: -100px 20px;  /* ⭐ 向上移動 20px（等於裁掉上面）*/
+  object-position: -25px 20px;  /* ⭐ 向上移動 20px（等於裁掉上面）*/
 }
