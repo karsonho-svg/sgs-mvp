@@ -1,5 +1,9 @@
  /* 停用 iOS 長按行為 */
   /* Testing*/
+@font-face {
+  font-family: "sgs-font";
+  src: url(fonts/FZLBGBK.ttf); 
+}
 .general-card,
 .card,
 img {
@@ -35,6 +39,7 @@ img {
 
 /* 名字直排 */
 .general-name-vert {
+  font-family: "sgs-font";
   writing-mode: vertical-rl;
   text-orientation: upright;
   font-size: 26px;
