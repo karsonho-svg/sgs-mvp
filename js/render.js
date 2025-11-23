@@ -95,9 +95,11 @@ function renderGeneral(g) {
 
       <!-- 右邊武將大圖 -->
       <div class="general-main">
-  <div class="hero-art-wrapper">
+  <div class="general-art-wrapper">
     <img class="general-art" src="${imgPath}">
   </div>
+
+  <div class="identity-tag">主</div>
   <div class="skill-box">${skillText}</div>
 </div>
 
