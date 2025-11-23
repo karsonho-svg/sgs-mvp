@@ -338,5 +338,5 @@ img {
   height: 110%;
   object-fit: cover;
   object-position: center;  
-  transform: translate(-20px, -10px); /* ⭐ 微調位置（可改） */
+  transform: translate(-40px, 10px); /* ⭐ 微調位置（可改） */
 }
