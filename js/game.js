@@ -1,5 +1,5 @@
 import { database } from "./firebase.js";
-import { ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+import { ref, set, onValue, push, get, update } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
 import { renderCard, renderGeneral } from "./render.js";
 import { deck } from "./deck.js";
 import { generals } from "./heroes.js";
@@ -11,22 +11,60 @@ import { generals } from "./heroes.js";
 //     generals.forEach(g => {
 //   set(ref(database, "generals/" + g.id), g);
 // });
+async function createRoom() {
+  const roomRef = push(ref(database, "rooms"));
+  const roomId = roomRef.key;
 
-    const createRoomBtn = document.getElementById("createRoomBtn");
+  const uid = "player_" + Math.floor(Math.random()*99999);
 
-    createRoomBtn.addEventListener("click", () => {
-    const roomId = "room_" + Math.random().toString(36).substring(2, 8);
-
-    const roomRef = ref(database, "rooms/" + roomId);
-
-  set(roomRef, {
-    players: {},
-    gameState: "waiting",
-    deckOrder: [],
-    discardPile: []
-  }).then(() => {
-    console.log("房間建立成功！ID =", roomId);
+  await set(roomRef, {
+    host: uid,
+    status: "waiting",
+    players: {
+      [uid]: {
+        name: "玩家1",
+        hero: null
+      }
+    }
   });
+
+  console.log("🎉 房間建立成功！roomId =", roomId);
+
+  return { roomId, uid };
+}
+
+document.getElementById("create-room-btn").addEventListener("click", async () => {
+  const { roomId } = await createRoom();
+  alert("房間已建立！房號：" + roomId);
+});
+import { ref, get, update } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+
+async function joinRoom(roomId) {
+  const roomRef = ref(database, "rooms/" + roomId);
+  const snapshot = await get(roomRef);
+
+  if (!snapshot.exists()) {
+    alert("❌ 房號不存在！");
+    return;
+  }
+
+  const uid = "player_" + Math.floor(Math.random()*99999);
+
+  await update(ref(database, `rooms/${roomId}/players/${uid}`), {
+    name: "路人" + Math.floor(Math.random()*50),
+    hero: null
+  });
+
+  console.log("🎉 成功加入房間！", roomId, uid);
+
+  return uid;
+}
+
+document.getElementById("join-room-btn").addEventListener("click", () => {
+  const roomId = prompt("請輸入房號：");
+  if (!roomId) return;
+
+  joinRoom(roomId);
 });
     const deckRef = ref(database, 'deck');
 onValue(deckRef, (snapshot) => {
