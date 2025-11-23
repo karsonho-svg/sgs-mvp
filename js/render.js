@@ -36,52 +36,50 @@ function addGeneralPressEffect(cardElement) {
 }
 function renderGeneral(g) {
 
-  // 武將框架對應（四勢力）
-  const generalFrameMap = {
+  const frameMap = {
     "蜀": "shu.png",
     "魏": "wei.png",
     "吳": "wu.png",
     "群": "qun.png"
   };
 
-  const frame = generalFrameMap[g.kingdom];  
+  const frame = frameMap[g.kingdom];
   const imgPath = `sgs-images/heroes/generals/biao${g.id}.png`;
 
-  // 血量計算
-  const currHp = g.maxHp;
-  const maxHp = g.maxHp;
-  function getHpColorByCurrent(currHp) {
-    if (currHp >= 4) return "#00cc33";
-    if (currHp === 3) return "#66cc00";
-    if (currHp === 2) return "#ffcc00";
-    if (currHp === 1) return "#ff0000";
-    return "#000000";
-  }
+  // 血量
+  const getHpColor = hp => {
+    if (hp >= 4) return "#00cc33";
+    if (hp === 3) return "#66cc00";
+    if (hp === 2) return "#ffcc00";
+    return "#ff0000";
+  };
 
   let hpHTML = "";
-  for (let i = 0; i < maxHp; i++) {
+  for (let i = 0; i < g.maxHp; i++) {
     hpHTML += `
-      <div class="hp-dot" style="background:${
-        i < currHp ? getHpColorByCurrent(currHp) : "#000"
-      }"></div>`;
+      <div class="hp-dot" style="background:${i < g.maxHp ? getHpColor(g.maxHp) : "#000"}"></div>
+    `;
   }
 
-  // 技能
   const skillText = g.skills
-      .map(s => `【${s.name}】${s.description}`)
-      .join("<br><br>");
+    .map(s => `【${s.name}】${s.description}`)
+    .join("<br><br>");
 
-  // ⭐ 正確的 HTML ⭐
+  // ⭐⭐ 最乾淨不會壞掉的 HTML ⭐⭐
   const html = `
     <div class="general-card"
-         style="background-image: url('sgs-images/photos/back/${frame}')">
+         style="background-image: url('sgs-images/photos/back/${frame}'); background-size: cover;">
 
-      <img class="general-art" src="${imgPath}">
-    
-      <div class="general-name-vert">${g.name}</div>
-      <div class="hp-area">${hpHTML}</div>
+      <div class="general-side">
+        <div class="general-name-vert">${g.name}</div>
+        <div class="hp-area">${hpHTML}</div>
+      </div>
 
-      <div class="skill-box">${skillText}</div>
+      <div class="general-main">
+        <img class="general-art" src="${imgPath}">
+        <div class="identity-tag">主</div>
+        <div class="skill-box">${skillText}</div>
+      </div>
 
     </div>
   `;
@@ -91,6 +89,9 @@ function renderGeneral(g) {
 
   addGeneralPressEffect(area.lastElementChild);
 }
+
+
+
 
 
 
