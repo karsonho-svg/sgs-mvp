@@ -311,7 +311,7 @@ img {
 }
 
 .general-main .general-art {
-  width: 120%;      /* ⭐⭐ 縮小比例 → 想更小改這裡 (80%~95%) */
+  width: 200%;      /* ⭐⭐ 縮小比例 → 想更小改這裡 (80%~95%) */
   height: auto;    /* 讓寬度等比縮小 */
   object-fit: contain;  /* ⭐ 保證整張圖片都看到、無裁切 */
 }
