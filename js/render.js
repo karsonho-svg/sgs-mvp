@@ -1,4 +1,11 @@
 // === 長按技能顯示 ===
+// 勢力框架對應
+const factionImageMap = {
+  "蜀": "shu.png",
+  "魏": "wei.png",
+  "吳": "wu.png",
+  "群": "qun.png"
+};
 function addGeneralPressEffect(cardElement) {
   const skillBox = cardElement.querySelector(".skill-box");
   let pressTimer = null;
@@ -43,7 +50,7 @@ function renderGeneral(g) {
   "群": "qun.png"
 };
 
-const frame = generalFrameMap[g.kingdom];
+const frame = factionImageMap[g.kingdom];
 
 const factionImage = factionImageMap[g.kingdom];
 
