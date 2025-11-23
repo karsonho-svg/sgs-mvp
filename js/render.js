@@ -107,8 +107,6 @@ function renderGeneral(g) {
   addGeneralPressEffect(area.lastElementChild);
 }
 
-export { renderGeneral };
-
 
 
 
