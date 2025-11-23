@@ -8,9 +8,9 @@ import { generals } from "./heroes.js";
 //         .then(() => console.log(`${card.name} 存入成功 ✅`))
 //         .catch(err => console.error(`${card.name} 寫入失敗 ❌`, err));
 //     });
-//     generals.forEach(g => {
-//   set(ref(database, "generals/" + g.id), g);
-// });
+    generals.forEach(g => {
+  set(ref(database, "generals/" + g.id), g);
+});
 
     const createRoomBtn = document.getElementById("createRoomBtn");
 
