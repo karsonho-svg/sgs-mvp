@@ -36,12 +36,14 @@ function renderGeneral(g) {
     "吳": "#1b5e20",
     "群": "#424242"
   };
-  const factionImageMap = {
+  const generalFrameMap = {
   "蜀": "shu.png",
   "魏": "wei.png",
   "吳": "wu.png",
   "群": "qun.png"
 };
+
+const frame = generalFrameMap[g.kingdom];
 
 const factionImage = factionImageMap[g.kingdom];
 
@@ -89,14 +91,15 @@ for (let i = 0; i < maxHp; i++) {
   const html = `
     <div class="general-card">
 
-      <div class="general-side">
-        <div class="faction-bar">
-        <img src="sgs-images/renderHeroes/factions/${factionImage}" class="faction-icon">
-        </div>
-        <div class="general-name-vert">${g.name}</div>
+       style="background-image: url('sgs-images/photos/back/${frame}')">
 
-        <div class="hp-area">${hpHTML}</div>
-      </div>
+    <img class="general-art" src="${imgPath}">
+    
+    <div class="general-name-vert">${g.name}</div>
+
+    <div class="hp-area">${hpHTML}</div>
+
+      
 
       <div class="general-main">
         <img class="general-art" src="${imgPath}">

@@ -17,14 +17,11 @@ img {
  .general-card {
   width: 280px;
   height: 420px;
-  background: #00000020;
-  border-radius: 12px;
-  overflow: visible;
+  background-size: cover;
+  background-repeat: no-repeat;
   position: relative;
   display: flex;
-  flex-direction: row;
-  user-select: none;
-  font-family: "Noto Sans TC", sans-serif;
+  flex-direction: column;
 }
 
 /* 左側欄 */
@@ -54,20 +51,21 @@ img {
 }
 /* 名字直排 */
 .general-name-vert {
+  position: absolute;
+  left: 12px;
+  top: 40px;
   writing-mode: vertical-rl;
   text-orientation: upright;
-  letter-spacing: 4px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  color: #fff;
   font-size: 22px;
   font-weight: 900;
-  color: white;
 }
 
 /* 勾玉 */
 .hp-area {
-  margin-top: auto;
-  margin-bottom: 32px;
+  position: absolute;
+  left: 20px;
+  bottom: 30px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -96,11 +94,14 @@ img {
   height: 100%;
   position: relative;
 }
-
 .general-art {
-  width: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 78%;
   height: 100%;
   object-fit: cover;
+  border-radius: 10px;
 }
 
 /* 身份圈 */
