@@ -334,9 +334,9 @@ img {
 
 /* 武將圖片本體 */
 .general-art {
-  width: 110%;         /* 稍微放大以便裁切 */
-  height: 110%;
+  width: 120%;         /* 稍微放大以便裁切 */
+  height: 120%;
   object-fit: cover;
   object-position: center;  
-  transform: translate(-80px, -10px); /* ⭐ 微調位置（可改） */
+  transform: translate(-25px, -15px); /* ⭐ 微調位置（可改） */
 }
