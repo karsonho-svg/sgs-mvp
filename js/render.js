@@ -1,4 +1,3 @@
-// === 長按技能顯示 ===
 // 勢力框架對應
 const factionImageMap = {
   "蜀": "shu.png",
@@ -6,66 +5,84 @@ const factionImageMap = {
   "吳": "wu.png",
   "群": "qun.png"
 };
+
+// HP 生成
+function getHpDots(currHp, maxHp) {
+  if (maxHp >= 6) {
+    return `<div class="hp-fraction">${currHp}/${maxHp}</div>`;
+  }
+
+  const hpPatternMap = {
+    5: {
+      5: [3,3,3,3,3],
+      4: [0,3,3,3,3],
+      3: [0,0,2,2,2],
+      2: [0,0,0,2,2],
+      1: [0,0,0,0,1],
+      0: [0,0,0,0,0]
+    },
+    4: {
+      4: [3,3,3,3],
+      3: [0,3,3,3],
+      2: [0,0,2,2],
+      1: [0,0,0,1],
+      0: [0,0,0,0]
+    },
+    3: {
+      3: [3,3,3],
+      2: [0,2,2],
+      1: [0,0,1],
+      0: [0,0,0]
+    },
+    2: {
+      2: [3,3],
+      1: [0,2],
+      0: [0,0]
+    }
+  };
+
+  const pattern = hpPatternMap[maxHp][currHp];
+  return pattern.map(v => 
+    `<img class="hp-dot-img" src="sgs-images/photos/magatama/${v}.png">`
+  ).join("");
+}
+
+// 長按技能顯示
 function addGeneralPressEffect(cardElement) {
   const skillBox = cardElement.querySelector(".skill-box");
   let pressTimer = null;
 
-  const showBox = () => {
-    skillBox.style.display = "block";
-  };
-  const hideBox = () => {
-    skillBox.style.display = "none";
-  };
-  const startPress = () => {
-    pressTimer = setTimeout(showBox, 300);
-  };
-  const cancelPress = () => {
-    clearTimeout(pressTimer);
-    hideBox();
-  };
+  const showBox = () => skillBox.style.display = "block";
+  const hideBox = () => skillBox.style.display = "none";
 
-  // 電腦
+  const startPress = () => pressTimer = setTimeout(showBox, 300);
+  const cancelPress = () => { clearTimeout(pressTimer); hideBox(); };
+
   cardElement.addEventListener("mousedown", startPress);
   cardElement.addEventListener("mouseup", cancelPress);
   cardElement.addEventListener("mouseleave", cancelPress);
 
-  // 手機
   cardElement.addEventListener("touchstart", startPress);
   cardElement.addEventListener("touchend", cancelPress);
   cardElement.addEventListener("touchcancel", cancelPress);
 }
+
+// -----------------------
+//   ⭐ renderGeneral
+// -----------------------
 function renderGeneral(g) {
 
-  const frameMap = {
-    "蜀": "shu.png",
-    "魏": "wei.png",
-    "吳": "wu.png",
-    "群": "qun.png"
-  };
-
-  const frame = frameMap[g.kingdom];
+  const frame = factionImageMap[g.kingdom];
   const imgPath = `sgs-images/heroes/generals/biao${g.id}.png`;
 
-  // 血量
-  const getHpColor = hp => {
-    if (hp >= 4) return "#00cc33";
-    if (hp === 3) return "#66cc00";
-    if (hp === 2) return "#ffcc00";
-    return "#ff0000";
-  };
-
-  let hpHTML = "";
-  for (let i = 0; i < g.maxHp; i++) {
-    hpHTML += `
-      <div class="hp-dot" style="background:${i < g.maxHp ? getHpColor(g.maxHp) : "#000"}"></div>
-    `;
-  }
+  const currHp = g.maxHp;
+  const maxHp = g.maxHp;
+  const hpHTML = getHpDots(currHp, maxHp);
 
   const skillText = g.skills
     .map(s => `【${s.name}】${s.description}`)
     .join("<br><br>");
 
-  // ⭐⭐ 最乾淨不會壞掉的 HTML ⭐⭐
   const html = `
     <div class="general-card"
          style="background-image: url('sgs-images/photos/back/${frame}'); background-size: cover;">
@@ -89,6 +106,8 @@ function renderGeneral(g) {
 
   addGeneralPressEffect(area.lastElementChild);
 }
+
+export { renderGeneral };
 
 
 
