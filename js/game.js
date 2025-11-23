@@ -37,7 +37,6 @@ document.getElementById("create-room-btn").addEventListener("click", async () =>
   const { roomId } = await createRoom();
   alert("房間已建立！房號：" + roomId);
 });
-import { ref, get, update } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
 
 async function joinRoom(roomId) {
   const roomRef = ref(database, "rooms/" + roomId);
