@@ -83,28 +83,7 @@ function renderGeneral(g) {
     .map(s => `【${s.name}】${s.description}`)
     .join("<br><br>");
 
-  const html = `
-    <div class="general-card"
-         style="background-image:url('sgs-images/photos/back/${frame}')">
 
-      <!-- 左邊勢力背景 -->
-      <div class="general-side">
-        <div class="general-name-vert">${g.name}</div>
-        <div class="hp-area">${hpHTML}</div>
-      </div>
-
-      <!-- 右邊武將大圖 -->
-      <div class="general-main">
-  <div class="general-art-wrapper">
-    <img class="general-art" src="${imgPath}">
-  </div>
-
-  <div class="identity-tag">主</div>
-  <div class="skill-box">${skillText}</div>
-</div>
-
-    </div>
-  `;
 
   document.getElementById("general-area")
     .insertAdjacentHTML("beforeend", html);
@@ -113,7 +92,24 @@ function renderGeneral(g) {
     document.getElementById("general-area").lastElementChild
   );
 }
+const html = `
+  <div class="general-card"
+       style="background-image: url('sgs-images/photos/back/${frame}'); background-size: cover;">
 
+    <div class="general-side">
+      <div class="general-name-vert">${g.name}</div>
+      <div class="hp-area">${hpHTML}</div>
+    </div>
+
+    <div class="general-main">
+      <div class="general-art-wrapper">
+        <img class="general-art" src="${imgPath}">
+      </div>
+      <div class="skill-box">${skillText}</div>
+    </div>
+
+  </div>
+`;
 
 
 
