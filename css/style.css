@@ -41,14 +41,14 @@ img {
   font-weight: 900;
   color: white;
   position: absolute;
-  left: 15px;
+  left: -10px;
   top: 80px;   /* 往下移一點 */
 }
 
 /* 血量（圖片） */
 .hp-area {
   position: absolute;
-  bottom: 20px;
+  bottom: 50px;
   left: 14px;
   display: flex;
   flex-direction: column;
@@ -302,12 +302,13 @@ img {
 /* 武將圖（真正要調的位置） */
 .general-art {
   position: absolute;
-  width: 120%;        /* 🟢 調整大小 */
+  width: 125%;        /* 🟢 調整大小 */
   height: 115%;
   object-fit: cover;
+  border-radius: 10px;
 
   /* 🟢 控制水平 / 垂直位置 */
-  object-position: 20% 40%;  
+  object-position: 50% 40%;  
   /* X: 0% 最左 → 100% 最右
      Y: 0% 最上 → 100% 最下 */
 }
