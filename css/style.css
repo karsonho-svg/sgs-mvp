@@ -40,16 +40,18 @@ img {
   box-sizing: border-box;
 }
 
-/* 勢力色條 */
 .faction-bar {
   width: 100%;
   height: 26px;
-  line-height: 26px;
-  text-align: center;
-  font-weight: 900;
-  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.faction-icon {
+  height: 26px;
+  object-fit: contain;
+}
 /* 名字直排 */
 .general-name-vert {
   writing-mode: vertical-rl;

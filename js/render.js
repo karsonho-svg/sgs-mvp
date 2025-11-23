@@ -36,6 +36,14 @@ function renderGeneral(g) {
     "吳": "#1b5e20",
     "群": "#424242"
   };
+  const factionImageMap = {
+  "蜀": "shu.png",
+  "魏": "wei.png",
+  "吳": "wu.png",
+  "群": "qun.png"
+};
+
+const factionImage = factionImageMap[g.kingdom];
 
   const factionColor = factionColorMap[g.kingdom] || "#555";
 
@@ -82,7 +90,9 @@ for (let i = 0; i < maxHp; i++) {
     <div class="general-card">
 
       <div class="general-side">
-        <div class="faction-bar" style="background:${factionColor};">${g.kingdom}</div>
+        <div class="faction-bar">
+        <img src="sgs-images/renderHeroes/factions/${factionImage}" class="faction-icon">
+        </div>
         <div class="general-name-vert">${g.name}</div>
 
         <div class="hp-area">${hpHTML}</div>
