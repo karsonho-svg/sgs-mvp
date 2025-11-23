@@ -36,92 +36,52 @@ function addGeneralPressEffect(cardElement) {
 }
 function renderGeneral(g) {
 
-  // 勢力顏色
-  const factionColorMap = {
-    "蜀": "#b71c1c",
-    "魏": "#0d47a1",
-    "吳": "#1b5e20",
-    "群": "#424242"
-  };
+  // 武將框架對應（四勢力）
   const generalFrameMap = {
-  "蜀": "shu.png",
-  "魏": "wei.png",
-  "吳": "wu.png",
-  "群": "qun.png"
-};
+    "蜀": "shu.png",
+    "魏": "wei.png",
+    "吳": "wu.png",
+    "群": "qun.png"
+  };
 
-const frame = factionImageMap[g.kingdom];
-
-const factionImage = factionImageMap[g.kingdom];
-
-  const factionColor = factionColorMap[g.kingdom] || "#555";
-
-  // 圖片位置（標將用 biao{id}.png）
+  const frame = generalFrameMap[g.kingdom];  
   const imgPath = `sgs-images/heroes/generals/biao${g.id}.png`;
 
- 
-
-// ⭐ 展示用武將卡 → 一律滿血
-const currHp = g.maxHp;
-const maxHp = g.maxHp;
-
-// 顏色依 "剩餘血量"（但滿血 = 全綠）
-function getHpColorByCurrent(currHp) {
-  if (currHp >= 4) return "#00cc33";   // 綠
-  if (currHp === 3) return "#66cc00";  // 黃綠
-  if (currHp === 2) return "#ffcc00";  // 黃
-  if (currHp === 1) return "#ff0000";  // 紅
-  return "#000000";                    // 黑（理論上不會用到）
-}
-
-let hpHTML = "";
-for (let i = 0; i < maxHp; i++) {
-  if (i < currHp) {
-    // 剩餘血量統一顏色
-    hpHTML += `<div class="hp-dot" style="background:${getHpColorByCurrent(currHp)}"></div>`;
-  } else {
-    // 超出的都是黑色
-    hpHTML += `<div class="hp-dot" style="background:#000000"></div>`;
+  // 血量計算
+  const currHp = g.maxHp;
+  const maxHp = g.maxHp;
+  function getHpColorByCurrent(currHp) {
+    if (currHp >= 4) return "#00cc33";
+    if (currHp === 3) return "#66cc00";
+    if (currHp === 2) return "#ffcc00";
+    if (currHp === 1) return "#ff0000";
+    return "#000000";
   }
-}
 
-  // 版本（標將不顯示）
-  const editionHTML = g.edition
-    ? `<div class="general-edition">${g.edition}</div>`
-    : "";
+  let hpHTML = "";
+  for (let i = 0; i < maxHp; i++) {
+    hpHTML += `
+      <div class="hp-dot" style="background:${
+        i < currHp ? getHpColorByCurrent(currHp) : "#000"
+      }"></div>`;
+  }
 
-  // 技能內容（水平長方形一次顯示）
+  // 技能
   const skillText = g.skills
-    .map(s => `【${s.name}】${s.description}`)
-    .join("<br><br>");
+      .map(s => `【${s.name}】${s.description}`)
+      .join("<br><br>");
 
+  // ⭐ 正確的 HTML ⭐
   const html = `
-    <div class="general-card">
+    <div class="general-card"
+         style="background-image: url('sgs-images/photos/back/${frame}')">
 
-       style="background-image: url('sgs-images/photos/back/${frame}')">
-
-    <img class="general-art" src="${imgPath}">
+      <img class="general-art" src="${imgPath}">
     
-    <div class="general-name-vert">${g.name}</div>
+      <div class="general-name-vert">${g.name}</div>
+      <div class="hp-area">${hpHTML}</div>
 
-    <div class="hp-area">${hpHTML}</div>
-
-      
-
-      <div class="general-main">
-        <img class="general-art" src="${imgPath}">
-
-        <div class="identity-tag">主</div>
-
-        ${editionHTML}
-
-        <div class="hand-count">手牌：4</div>
-
-        <!-- 技能框 -->
-        <div class="skill-box">${skillText}</div>
-        
-
-      </div>
+      <div class="skill-box">${skillText}</div>
 
     </div>
   `;
@@ -129,9 +89,7 @@ for (let i = 0; i < maxHp; i++) {
   const area = document.getElementById("general-area");
   area.insertAdjacentHTML("beforeend", html);
 
-  // ⭐ 長按效果（跟 deck 用法一樣）
-  const cardElement = area.lastElementChild;
-  addGeneralPressEffect(cardElement);
+  addGeneralPressEffect(area.lastElementChild);
 }
 
 
