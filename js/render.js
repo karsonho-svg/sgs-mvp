@@ -340,7 +340,7 @@ const imageNameMap = {
   
 
   let fileName = imageNameMap[card.id] || `${card.id}.png`;
-  const imgPath = `sgs-images/${folder}/${fileName}`;
+  const imgPath = `sgs-images/cards/${folder}/${fileName}`;
 
   // 4️⃣ 武器顯示「範圍：X」
   const rangeHTML =
@@ -363,7 +363,7 @@ const imageNameMap = {
 
   const html = `
     <div class="card">
-      <img src="sgs-images/card-base/card-base.png" class="card-base">
+      <img src="sgs-images/cards/card-base/card-base.png" class="card-base">
 
       <div class="card-suit-rank" style="color:${suitColor}">
         <div class="card-rank">${card.rank}</div>
