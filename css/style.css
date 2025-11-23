@@ -72,7 +72,7 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;     /* 🔥關鍵：填滿右側區域 */
-  object-position: 30% 65%;
+  object-position: 0% 100%;
   object-position: center; 
   position: absolute;
   top: 0;
