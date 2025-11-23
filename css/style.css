@@ -305,7 +305,7 @@ img {
   width: 120%;        /* 🟢 調整大小 */
   height: 115%;
   object-fit: cover;
-  margin-left: 30px;
+  margin-left: -30px;
 
   /* 🟢 控制水平 / 垂直位置 */
   object-position: 20% 40%;  
