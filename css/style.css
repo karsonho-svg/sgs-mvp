@@ -25,84 +25,55 @@ img {
 }
 
 /* 左側欄 */
+/* 左側欄 */
 .general-side {
-  width: 16.6%;
+  width: 18%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #222;
-  color: white;
-  padding-top: 6px;
-  box-sizing: border-box;
+
+  /* ❌ 移除黑色背景 */
+  background: transparent;
+
+  padding-top: 20px;  /* 可自由調整 */
 }
 
-.faction-bar {
-  width: 100%;
-  height: 26px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.faction-icon {
-  height: 26px;
-  object-fit: contain;
-}
-/* 名字直排 */
+/* 名字直排（往下移） */
 .general-name-vert {
-  position: absolute;
-  left: 12px;
-  top: 40px;
   writing-mode: vertical-rl;
   text-orientation: upright;
-  color: #fff;
-  font-size: 22px;
+  letter-spacing: 4px;
+  font-size: 24px;
   font-weight: 900;
+  color: white;
+
+  margin-top: 40px; /* ⭐ 越大越往下 */
 }
 
-/* 勾玉 */
+/* HP 區域 */
 .hp-area {
-  position: absolute;
-  left: 20px;
-  bottom: 30px;
+  margin-top: auto;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
-.hp-dot {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid white;
-}
-
-
-/* 手牌數 */
-.hand-count {
-  position: absolute;
-  left: -40px;
-  bottom: 6px;
-  color: white;
-  font-size: 10px;
-  font-weight: 700;
-}
-
-/* 右側大圖 */
+/* 右側主視覺區 */
 .general-main {
-  width: 83.4%;
+  width: 82%;
   height: 100%;
   position: relative;
+
+  /* ⭐⭐ 用人物圖當背景，讓它滿版 */
+  background-size: cover;
+  background-position: center;
 }
+
+/* 移除舊的武將圖（避免壓在框架上） */
 .general-art {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 78%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
+  display: none;
 }
 .hp-dot-img {
   width: 22px;

@@ -92,9 +92,13 @@ function renderGeneral(g) {
         <div class="hp-area">${hpHTML}</div>
       </div>
 
-      <div class="general-main">
-        <img class="general-art" src="${imgPath}">
-        <div class="identity-tag">主</div>
+      <!-- ⭐⭐ 人物圖改成背景圖方式 -->
+      <div class="general-main" 
+           style="background-image: url('${imgPath}');">
+
+        <!-- 主公圈你要換成圖片，所以暫時移除 -->
+        <!-- <div class="identity-tag">主</div> -->
+
         <div class="skill-box">${skillText}</div>
       </div>
 
