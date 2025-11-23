@@ -85,32 +85,30 @@ function renderGeneral(g) {
 
   const html = `
     <div class="general-card"
-         style="background-image: url('sgs-images/photos/back/${frame}'); background-size: cover;">
+         style="background-image:url('sgs-images/photos/back/${frame}')">
 
+      <!-- 左邊勢力背景 -->
       <div class="general-side">
         <div class="general-name-vert">${g.name}</div>
         <div class="hp-area">${hpHTML}</div>
       </div>
 
-      <!-- ⭐⭐ 人物圖改成背景圖方式 -->
-      <div class="general-main" 
-           style="background-image: url('${imgPath}');">
-
-        <!-- 主公圈你要換成圖片，所以暫時移除 -->
-        <!-- <div class="identity-tag">主</div> -->
-
+      <!-- 右邊武將大圖 -->
+      <div class="general-main">
+        <img class="general-art" src="${imgPath}">
         <div class="skill-box">${skillText}</div>
       </div>
 
     </div>
   `;
 
-  const area = document.getElementById("general-area");
-  area.insertAdjacentHTML("beforeend", html);
+  document.getElementById("general-area")
+    .insertAdjacentHTML("beforeend", html);
 
-  addGeneralPressEffect(area.lastElementChild);
+  addGeneralPressEffect(
+    document.getElementById("general-area").lastElementChild
+  );
 }
-
 
 
 
