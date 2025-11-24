@@ -20,7 +20,7 @@
 <div id="modal-bg" class="modal-bg" style="display:none;"></div>
 
 <!-- 🔥 彈窗 -->
-<div id="modal-settings" class="modal-window" style="display:none;">
+ <div id="room-settings" style="display:none;">
   <h2>房間設定</h2>
 
   <div class="setting-row">
@@ -37,10 +37,11 @@
   </div>
 
   <div class="setting-row">
-    <label>選將底池：</label>
-<div id="general-pool" class="pool-checkboxes">
-  <span><input type="checkbox" value="standard"> 标将</span><br>
-</div>
+    <span>3. 選將底池：</span>
+    <label><input type="checkbox" value="standard" class="pool"> 標準將</label>
+    <label><input type="checkbox" value="yijiang" class="pool"> 一將成名</label>
+  </div>
+
   <div class="setting-row">
     <span>4. 每人可選武將數：</span>
     <select id="general-count">
@@ -62,6 +63,8 @@
 
   <button id="confirm-create" class="sgs-btn">建立房間</button>
 </div>
+
+  
 
   <div id="card-area"></div>
   <div id="general-area"></div> 

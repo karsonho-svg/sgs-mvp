@@ -98,7 +98,7 @@ async function joinRoom(roomId) {
   const snapshot = await get(roomRef);
 
   if (!snapshot.exists()) {
-    alert("❌ 房號不存在！");
+    alert("房號不存在！");
     return;
   }
 
