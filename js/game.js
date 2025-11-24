@@ -6,7 +6,7 @@ import { generals } from "./heroes.js";
 
 document.getElementById("create-room-btn").addEventListener("click", () => {
   document.getElementById("modal-bg").style.display = "block";
-  document.getElementById("modal-settings").style.display = "block";
+  document.getElementById("room-settings").style.display = "block";
 });
 
 
