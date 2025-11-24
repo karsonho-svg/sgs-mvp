@@ -10,19 +10,15 @@ html, body {
 
 /* 固定 16:9 遊戲畫面 */
 #game-screen {
-  position: absolute;
+  display: none;   /* ⭐ 預設不可見 */
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  
   width: 100vw;
-  height: 56.25vw;  /* 16:9 = 高度 = 寬度 * 0.5625 */
-  
-  max-width: 177.78vh; /* 寬度 <= 高度 * 1.7778 */
-  max-height: 100vh;
-
-  background: #222;   /* 你的遊戲主底色 */
-  overflow: hidden;
+  height: calc(100vw * 9 / 16);
+  transform: translate(-50%, -50%);
+  background: black;
+  z-index: 500;    /* 或更高 */
 }
 /* 手機直向提示旋轉 */
 @media screen and (orientation: portrait) {
