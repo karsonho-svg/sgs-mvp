@@ -55,7 +55,11 @@ document.getElementById("player-count").addEventListener("change", function() {
 document.getElementById("confirm-create").addEventListener("click", async () => {
   const mode = document.getElementById("mode-select").value;
   const count = document.getElementById("player-count").value;
-  const pool = document.getElementById("general-pool").value;
+  const poolCheckboxes = document.querySelectorAll("#general-pool input[type='checkbox']");
+  let pool = [];
+  poolCheckboxes.forEach(cb => {
+  if (cb.checked) pool.push(cb.value);
+});
   const gCount = document.getElementById("general-count").value;
   const playTime = document.getElementById("play-time").value;
 
