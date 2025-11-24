@@ -3,17 +3,54 @@
 <head>
   <meta charset="utf-8">
   <title>三國殺牌庫模板</title>
-  
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
   <h1>三國殺牌庫測試</h1>
 
+  <!-- 主 UI -->
   <div id="room-ui">
-  <button id="create-room-btn" class="sgs-btn">創建房間</button>
-  <button id="join-room-btn" class="sgs-btn">加入房間</button>
-</div>
+    <button id="create-room-btn" class="sgs-btn">創建房間</button>
+    <button id="join-room-btn" class="sgs-btn">加入房間</button>
+  </div>
+
+  <!-- 房間設定面板 -->
+  <div id="room-settings" style="display:none;">
+    <h2>房間設定</h2>
+
+    <label>遊戲模式：</label>
+    <select id="mode-select">
+      <option value="">請選擇</option>
+      <option value="identity">身分場</option>
+    </select>
+
+    <label>人數：</label>
+    <select id="player-count" disabled></select>
+
+    <label>選將底池：</label>
+    <select id="general-pool">
+      <option value="standard">標準（generals）</option>
+    </select>
+
+    <label>每人可選武將數：</label>
+    <select id="general-count">
+      <option value="1">1</option>
+      <option value="3">3</option>
+      <option value="5">5</option>
+      <option value="8">8</option>
+    </select>
+
+    <label>出牌時間：</label>
+    <select id="play-time">
+      <option value="10">10 秒</option>
+      <option value="15">15 秒</option>
+      <option value="20">20 秒</option>
+    </select>
+
+    <button id="confirm-create">建立房間</button>
+  </div>
+
   <div id="card-area"></div>
   <div id="general-area"></div> 
 
@@ -22,11 +59,11 @@
     document.addEventListener("contextmenu", e => e.preventDefault());
   </script>
 
+  <!-- scripts -->
   <script type="module" src="js/firebase.js"></script>
   <script type="module" src="js/deck.js"></script>
   <script type="module" src="js/heroes.js"></script>
   <script type="module" src="js/render.js"></script>
   <script type="module" src="js/game.js"></script>
-
 </body>
 </html>

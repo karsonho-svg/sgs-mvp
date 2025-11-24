@@ -3,39 +3,85 @@ import { ref, set, onValue, push, get, update } from "https://www.gstatic.com/fi
 import { renderCard, renderGeneral } from "./render.js";
 import { deck } from "./deck.js";
 import { generals } from "./heroes.js";
-//     deck.forEach(card => {
-//       set(ref(database, 'deck/' + card.id), card)
-//         .then(() => console.log(`${card.name} 存入成功 ✅`))
-//         .catch(err => console.error(`${card.name} 寫入失敗 ❌`, err));
-//     });
-//     generals.forEach(g => {
-//   set(ref(database, "generals/" + g.id), g);
-// });
-async function createRoom() {
-  const roomRef = push(ref(database, "rooms"));
-  const roomId = roomRef.key;
 
-  const uid = "player_" + Math.floor(Math.random()*99999);
 
-  await set(roomRef, {
+function generateRoomId() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let id = "";
+  for (let i = 0; i < 6; i++) {
+    id += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return id;
+}
+
+const identityModes = {
+  4: ["主忠反內"],
+  5: ["主忠反反內"],
+  6: ["主忠反反內內", "主忠忠反反內"],
+  7: ["主忠忠反反反內"],
+  8: ["主忠忠反反反反內", "主忠忠反反反內內"]
+};
+
+document.getElementById("mode-select").addEventListener("change", function() {
+  const mode = this.value;
+  const countSelect = document.getElementById("player-count");
+
+  if (mode === "identity") {
+    countSelect.disabled = false;
+
+    countSelect.innerHTML = "<option value=''>請選擇</option>";
+    Object.keys(identityModes).forEach(n => {
+      const op = document.createElement("option");
+      op.value = n;
+      op.textContent = `${n} 人`;
+      countSelect.appendChild(op);
+    });
+  }
+});
+
+document.getElementById("player-count").addEventListener("change", function() {
+  const count = this.value;
+  const roles = identityModes[count];
+
+  console.log("身份組合：", roles);
+  // 未來 UI 會顯示
+});
+
+document.getElementById("confirm-create").addEventListener("click", async () => {
+  const mode = document.getElementById("mode-select").value;
+  const count = document.getElementById("player-count").value;
+  const pool = document.getElementById("general-pool").value;
+  const gCount = document.getElementById("general-count").value;
+  const playTime = document.getElementById("play-time").value;
+
+  if (!mode || !count) {
+    alert("請把設定選好喔～(˶ᵔᵕᵔ˶)");
+    return;
+  }
+
+  const roomId = generateRoomId();
+  const uid = "player_" + Math.floor(Math.random() * 99999);
+
+  await set(ref(database, "rooms/" + roomId), {
     host: uid,
     status: "waiting",
+    settings: {
+      mode,
+      count,
+      pool,
+      generalChoice: gCount,
+      playTime
+    },
     players: {
       [uid]: {
         name: "玩家1",
-        hero: null
+        hero: null,
+        ready: false
       }
     }
   });
 
-  console.log("🎉 房間建立成功！roomId =", roomId);
-
-  return { roomId, uid };
-}
-
-document.getElementById("create-room-btn").addEventListener("click", async () => {
-  const { roomId } = await createRoom();
-  alert("房間已建立！房號：" + roomId);
+  alert("房間建立成功！房號：" + roomId);
 });
 
 async function joinRoom(roomId) {
@@ -62,26 +108,23 @@ async function joinRoom(roomId) {
 document.getElementById("join-room-btn").addEventListener("click", () => {
   const roomId = prompt("請輸入房號：");
   if (!roomId) return;
-
   joinRoom(roomId);
 });
-    const deckRef = ref(database, 'deck');
+
+// 下面兩段可留可刪（取決於你要不要 debug 顯示全牌）
+const deckRef = ref(database, 'deck');
 onValue(deckRef, (snapshot) => {
   const deckData = snapshot.val();
-
-  // 🔥🔥🔥：每次重新 render 之前先清空畫面
   document.getElementById("card-area").innerHTML = "";
-
-  // 再把牌庫全部畫出來
   Object.values(deckData).forEach(card => {
     renderCard(card);
   });
 });
+
 const generalsRef = ref(database, "generals");
 onValue(generalsRef, snapshot => {
   const data = snapshot.val();
   document.getElementById("general-area").innerHTML = "";
-
   Object.values(data).forEach(g => {
     renderGeneral(g);
   });
