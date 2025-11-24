@@ -16,40 +16,54 @@
   </div>
 
   <!-- 房間設定面板 -->
-  <div id="room-settings" style="display:none;">
-    <h2>房間設定</h2>
+  <!-- 🔥 黑色透明背景 -->
+<div id="modal-bg" class="modal-bg" style="display:none;"></div>
 
-    <label>遊戲模式：</label>
+<!-- 🔥 彈窗 -->
+<div id="modal-settings" class="modal-window" style="display:none;">
+  <h2>房間設定</h2>
+
+  <div class="setting-row">
+    <span>1. 遊戲模式：</span>
     <select id="mode-select">
       <option value="">請選擇</option>
       <option value="identity">身分場</option>
     </select>
+  </div>
 
-    <label>人數：</label>
+  <div class="setting-row">
+    <span>2. 人數：</span>
     <select id="player-count" disabled></select>
+  </div>
 
-    <label>選將底池：</label>
+  <div class="setting-row">
+    <span>3. 選將底池：</span>
     <select id="general-pool">
       <option value="standard">標準（generals）</option>
     </select>
+  </div>
 
-    <label>每人可選武將數：</label>
+  <div class="setting-row">
+    <span>4. 每人可選武將數：</span>
     <select id="general-count">
       <option value="1">1</option>
       <option value="3">3</option>
       <option value="5">5</option>
       <option value="8">8</option>
     </select>
+  </div>
 
-    <label>出牌時間：</label>
+  <div class="setting-row">
+    <span>5. 出牌時間：</span>
     <select id="play-time">
       <option value="10">10 秒</option>
       <option value="15">15 秒</option>
       <option value="20">20 秒</option>
     </select>
-
-    <button id="confirm-create">建立房間</button>
   </div>
+
+  <button id="confirm-create" class="sgs-btn">建立房間</button>
+</div>
 
   <div id="card-area"></div>
   <div id="general-area"></div> 

@@ -3,9 +3,10 @@ import { ref, set, onValue, push, get, update } from "https://www.gstatic.com/fi
 import { renderCard, renderGeneral } from "./render.js";
 import { deck } from "./deck.js";
 import { generals } from "./heroes.js";
+
 document.getElementById("create-room-btn").addEventListener("click", () => {
-  document.getElementById("room-ui").style.display = "none";
-  document.getElementById("room-settings").style.display = "block";
+  document.getElementById("modal-bg").style.display = "block";
+  document.getElementById("modal-settings").style.display = "block";
 });
 
 
@@ -59,7 +60,7 @@ document.getElementById("confirm-create").addEventListener("click", async () => 
   const playTime = document.getElementById("play-time").value;
 
   if (!mode || !count) {
-    alert("請把設定選好喔～(˶ᵔᵕᵔ˶)");
+    alert("請先把設定選好");
     return;
   }
 
@@ -116,20 +117,20 @@ document.getElementById("join-room-btn").addEventListener("click", () => {
 });
 
 // 下面兩段可留可刪（取決於你要不要 debug 顯示全牌）
-// const deckRef = ref(database, 'deck');
-// onValue(deckRef, (snapshot) => {
-//   const deckData = snapshot.val();
-//   document.getElementById("card-area").innerHTML = "";
-//   Object.values(deckData).forEach(card => {
-//     renderCard(card);
-//   });
-// });
+const deckRef = ref(database, 'deck');
+onValue(deckRef, (snapshot) => {
+  const deckData = snapshot.val();
+  document.getElementById("card-area").innerHTML = "";
+  Object.values(deckData).forEach(card => {
+    renderCard(card);
+  });
+});
 
-// const generalsRef = ref(database, "generals");
-// onValue(generalsRef, snapshot => {
-//   const data = snapshot.val();
-//   document.getElementById("general-area").innerHTML = "";
-//   Object.values(data).forEach(g => {
-//     renderGeneral(g);
-//   });
-// });
+const generalsRef = ref(database, "generals");
+onValue(generalsRef, snapshot => {
+  const data = snapshot.val();
+  document.getElementById("general-area").innerHTML = "";
+  Object.values(data).forEach(g => {
+    renderGeneral(g);
+  });
+});

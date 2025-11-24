@@ -318,3 +318,44 @@ img {
   /* X: 0% 最左 → 100% 最右
      Y: 0% 最上 → 100% 最下 */
 }
+/* 🔥 彈窗黑色背景 */
+.modal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+}
+
+/* 🔥 彈窗主體 */
+.modal-window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 360px;
+  padding: 24px;
+  background: #f9f5e9;
+  border: 4px solid #8b6b2a;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  z-index: 1001;
+  font-family: "Noto Sans TC", sans-serif;
+}
+
+/* 🔥 每一項設定：橫向排列 */
+.setting-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0;
+  gap: 8px;
+}
+
+.setting-row span {
+  min-width: 130px; 
+  font-weight: 700;
+}
