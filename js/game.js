@@ -73,7 +73,6 @@ document.getElementById("confirm-create").addEventListener("click", async () => 
   const roomId = generateRoomId();
   const uid = "player_" + Math.floor(Math.random() * 99999);
 
-  // ⭐ 建立房間
   await set(ref(database, "rooms/" + roomId), {
     host: uid,
     status: "waiting",
@@ -83,38 +82,31 @@ document.getElementById("confirm-create").addEventListener("click", async () => 
     }
   });
 
-  // ⭐ 關閉彈窗
+  // 關掉彈窗
   document.getElementById("modal-bg").style.display = "none";
   document.getElementById("room-settings").style.display = "none";
 
-  // ⭐ 顯示大廳
+  // ⭐⭐ 立刻跳進大廳 ⭐⭐
   showLobby(roomId);
-
 });
 function showLobby(roomId) {
   const lobby = document.getElementById("room-lobby");
 
-  // 顯示大廳
   lobby.style.display = "block";
-
-  // 寫上房號
   document.getElementById("lobby-room-id").textContent = roomId;
 
   const roomRef = ref(database, "rooms/" + roomId);
 
-  // 🔥 即時監聽房間資料（玩家加入時自動更新）
   onValue(roomRef, snapshot => {
     if (!snapshot.exists()) return;
     const data = snapshot.val();
 
-    // 更新設定顯示
     document.getElementById("lobby-mode").textContent = data.settings.mode;
     document.getElementById("lobby-count").textContent = data.settings.count;
     document.getElementById("lobby-pool").textContent = data.settings.pool.join("、");
     document.getElementById("lobby-gcount").textContent = data.settings.generalChoice;
     document.getElementById("lobby-playtime").textContent = data.settings.playTime + " 秒";
 
-    // 更新玩家列表
     const list = document.getElementById("player-list");
     list.innerHTML = "";
 
@@ -139,12 +131,12 @@ async function joinRoom(roomId) {
 
   await update(ref(database, `rooms/${roomId}/players/${uid}`), {
     name: "路人" + Math.floor(Math.random()*50),
-    hero: null
+    hero: null,
+    ready: false
   });
 
-  console.log("🎉 成功加入房間！", roomId, uid);
-
-  return uid;
+  // ⭐⭐ 成功加入 → 顯示大廳 ⭐⭐
+  showLobby(roomId);
 }
 
 document.getElementById("join-room-btn").addEventListener("click", () => {
