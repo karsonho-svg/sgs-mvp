@@ -18,7 +18,7 @@ html, body {
   height: calc(100vw * 9 / 16);
   transform: translate(-50%, -50%);
   background: black;
-  z-index: 500;    /* 或更高 */
+  z-index: 9999;    /* 或更高 */
 }
 /* 手機直向提示旋轉 */
 @media screen and (orientation: portrait) {
