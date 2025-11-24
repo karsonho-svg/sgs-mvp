@@ -55,11 +55,13 @@ document.getElementById("player-count").addEventListener("change", function() {
 document.getElementById("confirm-create").addEventListener("click", async () => {
   const mode = document.getElementById("mode-select").value;
   const count = document.getElementById("player-count").value;
-  const poolCheckboxes = document.querySelectorAll("#general-pool input[type='checkbox']");
+
+  const poolCheckboxes = document.querySelectorAll(".pool");
   let pool = [];
   poolCheckboxes.forEach(cb => {
-  if (cb.checked) pool.push(cb.value);
-});
+    if (cb.checked) pool.push(cb.value);
+  });
+
   const gCount = document.getElementById("general-count").value;
   const playTime = document.getElementById("play-time").value;
 
@@ -71,27 +73,58 @@ document.getElementById("confirm-create").addEventListener("click", async () => 
   const roomId = generateRoomId();
   const uid = "player_" + Math.floor(Math.random() * 99999);
 
+  // ⭐ 建立房間
   await set(ref(database, "rooms/" + roomId), {
     host: uid,
     status: "waiting",
-    settings: {
-      mode,
-      count,
-      pool,
-      generalChoice: gCount,
-      playTime
-    },
+    settings: { mode, count, pool, generalChoice: gCount, playTime },
     players: {
-      [uid]: {
-        name: "玩家1",
-        hero: null,
-        ready: false
-      }
+      [uid]: { name: "玩家1", hero: null, ready: false }
     }
   });
 
-  alert("房間建立成功！房號：" + roomId);
+  // ⭐ 關閉彈窗
+  document.getElementById("modal-bg").style.display = "none";
+  document.getElementById("room-settings").style.display = "none";
+
+  // ⭐ 顯示大廳
+  showLobby(roomId);
+
 });
+function showLobby(roomId) {
+  const lobby = document.getElementById("room-lobby");
+
+  // 顯示大廳
+  lobby.style.display = "block";
+
+  // 寫上房號
+  document.getElementById("lobby-room-id").textContent = roomId;
+
+  const roomRef = ref(database, "rooms/" + roomId);
+
+  // 🔥 即時監聽房間資料（玩家加入時自動更新）
+  onValue(roomRef, snapshot => {
+    if (!snapshot.exists()) return;
+    const data = snapshot.val();
+
+    // 更新設定顯示
+    document.getElementById("lobby-mode").textContent = data.settings.mode;
+    document.getElementById("lobby-count").textContent = data.settings.count;
+    document.getElementById("lobby-pool").textContent = data.settings.pool.join("、");
+    document.getElementById("lobby-gcount").textContent = data.settings.generalChoice;
+    document.getElementById("lobby-playtime").textContent = data.settings.playTime + " 秒";
+
+    // 更新玩家列表
+    const list = document.getElementById("player-list");
+    list.innerHTML = "";
+
+    Object.values(data.players).forEach(p => {
+      const li = document.createElement("li");
+      li.textContent = p.name + (p.ready ? " ✔️" : "");
+      list.appendChild(li);
+    });
+  });
+}
 
 async function joinRoom(roomId) {
   const roomRef = ref(database, "rooms/" + roomId);
