@@ -1,3 +1,47 @@
+/* 整頁鎖定，不讓捲動 */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: black;  /* 手機寬高不符時，外面黑邊 */
+}
+
+/* 固定 16:9 遊戲畫面 */
+#game-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  width: 100vw;
+  height: 56.25vw;  /* 16:9 = 高度 = 寬度 * 0.5625 */
+  
+  max-width: 177.78vh; /* 寬度 <= 高度 * 1.7778 */
+  max-height: 100vh;
+
+  background: #222;   /* 你的遊戲主底色 */
+  overflow: hidden;
+}
+/* 手機直向提示旋轉 */
+@media screen and (orientation: portrait) {
+  #game-screen {
+    display: none;
+  }
+
+  #rotate-tip {
+    display: flex;
+  }
+}
+
+/* 橫向時正常顯示 */
+@media screen and (orientation: landscape) {
+  #rotate-tip {
+    display: none;
+  }
+}
+
 @font-face {
   font-family: "sgs-font";
   src: url(fonts/fonts.ttf); 
