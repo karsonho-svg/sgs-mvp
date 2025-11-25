@@ -15,111 +15,94 @@
     <button id="join-room-btn" class="sgs-btn">加入房間</button>
   </div>
 
-  <!-- 房間設定面板 -->
   <!-- 🔥 黑色透明背景 -->
-<!-- 黑色透明背景 -->
-<div id="modal-bg" class="modal-bg" style="display:none;"></div>
+  <div id="modal-bg" class="modal-bg" style="display:none;"></div>
 
-<!-- 彈窗本體 -->
-<div id="room-settings" class="modal-window" style="display:none;">
-  <h2>房間設定</h2>
+  <!-- 🔥 房間設定彈窗 -->
+  <div id="room-settings" class="modal-window" style="display:none;">
+    <h2>房間設定</h2>
 
-  <div class="setting-row">
-    <span>1. 遊戲模式：</span>
-    <select id="mode-select">
-      <option value="">請選擇</option>
-      <option value="identity">身分場</option>
-    </select>
+    <div class="setting-row">
+      <span>1. 遊戲模式：</span>
+      <select id="mode-select">
+        <option value="">請選擇</option>
+        <option value="identity">身分場</option>
+      </select>
+    </div>
+
+    <div class="setting-row">
+      <span>2. 人數：</span>
+      <select id="player-count" disabled></select>
+    </div>
+
+    <div class="setting-row">
+      <span>3. 選將底池：</span>
+      <label><input type="checkbox" value="standard" class="pool"> 標準將</label>
+    </div>
+
+    <div class="setting-row">
+      <span>4. 每人可選武將數：</span>
+      <select id="general-count">
+        <option value="1">1</option>
+        <option value="3">3</option>
+        <option value="5">5</option>
+        <option value="8">8</option>
+      </select>
+    </div>
+
+    <div class="setting-row">
+      <span>5. 出牌時間：</span>
+      <select id="play-time">
+        <option value="10">10 秒</option>
+        <option value="15">15 秒</option>
+        <option value="20">20 秒</option>
+      </select>
+    </div>
+
+    <button id="confirm-create" class="sgs-btn">建立房間</button>
   </div>
 
-  <div class="setting-row">
-    <span>2. 人數：</span>
-    <select id="player-count" disabled></select>
+  <!-- ⭐⭐⭐ 房間大廳（要與 room-settings 分開） -->
+  <div id="room-lobby" class="lobby-window" style="display:none;">
+    <h2>房間大廳</h2>
+
+    <div class="lobby-info">
+      <p><strong>房號：</strong><span id="lobby-room-id"></span></p>
+      <p><strong>遊戲模式：</strong><span id="lobby-mode"></span></p>
+      <p><strong>人數：</strong><span id="lobby-count"></span></p>
+      <p><strong>選將底池：</strong><span id="lobby-pool"></span></p>
+      <p><strong>每人選將數：</strong><span id="lobby-gcount"></span></p>
+      <p><strong>出牌時間：</strong><span id="lobby-playtime"></span></p>
+    </div>
+
+    <h3>玩家列表</h3>
+    <ul id="player-list"></ul>
+
+    <button id="start-game-btn" class="sgs-btn">開始遊戲</button>
   </div>
 
-  <div class="setting-row">
-    <span>3. 選將底池：</span>
-    <label><input type="checkbox" value="standard" class="pool"> 標準將</label>
+  <!-- 📱 旋轉提示 -->
+  <div id="rotate-tip" style="
+    display:none;
+    width:100vw;
+    height:100vh;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:28px;
+    background:black;">
+    📱 請將手機橫向使用以開始遊戲
   </div>
 
-  <div class="setting-row">
-    <span>4. 每人可選武將數：</span>
-    <select id="general-count">
-      <option value="1">1</option>
-      <option value="3">3</option>
-      <option value="5">5</option>
-      <option value="8">8</option>
-    </select>
+  <!-- 🎮 遊戲畫面（永遠放在最底部） -->
+  <div id="game-screen">
+    <div id="player-area"></div>
+    <div id="opponent-area"></div>
+    <div id="battlefield"></div>
+    <div id="hand-cards"></div>
   </div>
 
-  <div class="setting-row">
-    <span>5. 出牌時間：</span>
-    <select id="play-time">
-      <option value="10">10 秒</option>
-      <option value="15">15 秒</option>
-      <option value="20">20 秒</option>
-    </select>
-  </div>
-
-  <button id="confirm-create" class="sgs-btn">建立房間</button>
-  <!-- 🔥 房間大廳 -->
-<div id="room-lobby" class="lobby-window" style="display:none;">
-
-  <h2>房間大廳</h2>
-
-  <div class="lobby-info">
-    <p><strong>房號：</strong><span id="lobby-room-id"></span></p>
-    <p><strong>遊戲模式：</strong><span id="lobby-mode"></span></p>
-    <p><strong>人數：</strong><span id="lobby-count"></span></p>
-    <p><strong>選將底池：</strong><span id="lobby-pool"></span></p>
-    <p><strong>每人選將數：</strong><span id="lobby-gcount"></span></p>
-    <p><strong>出牌時間：</strong><span id="lobby-playtime"></span></p>
-  </div>
-
-  <h3>玩家列表</h3>
-  <ul id="player-list"></ul>
-
-  <button id="start-game-btn" class="sgs-btn">開始遊戲</button>
-</div>
-</div>
-<!-- 🎯 大廳 UI -->
-<div id="room-lobby" style="display:none;" class="lobby-window">
-  <h2>遊戲大廳</h2>
-
-  <p>房號：<span id="lobby-room-id"></span></p>
-
-  <h3>遊戲設定</h3>
-  <ul>
-    <li>模式：<span id="lobby-mode"></span></li>
-    <li>人數：<span id="lobby-count"></span></li>
-    <li>底池：<span id="lobby-pool"></span></li>
-    <li>每人選將：<span id="lobby-gcount"></span></li>
-    <li>出牌時間：<span id="lobby-playtime"></span></li>
-  </ul>
-
-  <h3>玩家列表</h3>
-  <ul id="player-list"></ul>
-</div>
-<div id="rotate-tip" style="
-  display:none;
-  width:100vw;
-  height:100vh;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-size:28px;
-  background:black;">
-  📱 請將手機橫向使用以開始遊戲
-</div>
-<div id="game-screen">
-  <div id="player-area"></div>
-  <div id="opponent-area"></div>
-  <div id="battlefield"></div>
-  <div id="hand-cards"></div>
-</div>
-
-  
-
+  <!-- 卡片展示 -->
   <div id="card-area"></div>
   <div id="general-area"></div> 
 
@@ -128,7 +111,7 @@
     document.addEventListener("contextmenu", e => e.preventDefault());
   </script>
 
-  <!-- scripts -->
+  <!-- Scripts -->
   <script type="module" src="js/firebase.js"></script>
   <script type="module" src="js/deck.js"></script>
   <script type="module" src="js/heroes.js"></script>
