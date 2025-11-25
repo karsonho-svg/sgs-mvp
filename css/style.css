@@ -10,15 +10,21 @@ html, body {
 
 /* 固定 16:9 遊戲畫面 */
 #game-screen {
-  display: none;   /* ⭐ 預設不可見 */
   position: fixed;
   top: 50%;
   left: 50%;
+
+  /* 16:9 固定比例 */
   width: 100vw;
   height: calc(100vw * 9 / 16);
+  max-height: 100vh; /* 🔥 避免太高 */
+  max-width: calc(100vh * 16 / 9); 
+
   transform: translate(-50%, -50%);
   background: black;
-  z-index: 9999;    /* 或更高 */
+
+  z-index: 9999;
+  display: none;     /* ⭐ 一開始一定要隱藏 */
 }
 /* 手機直向提示旋轉 */
 @media screen and (orientation: portrait) {
