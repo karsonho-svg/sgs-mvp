@@ -5,8 +5,14 @@ import { deck } from "./deck.js";
 import { generals } from "./heroes.js";
 
 document.getElementById("create-room-btn").addEventListener("click", () => {
-  document.getElementById("modal-bg").style.display = "block";
-  document.getElementById("room-settings").style.display = "block";
+  showNameInput((playerName) => {
+    // 存起來等下建立房間時用
+    window.tempCreatorName = playerName;
+
+    // 打開房間設定彈窗
+    document.getElementById("modal-bg").style.display = "block";
+    document.getElementById("room-settings").style.display = "block";
+  });
 });
 
 
@@ -78,8 +84,8 @@ document.getElementById("confirm-create").addEventListener("click", async () => 
     status: "waiting",
     settings: { mode, count, pool, generalChoice: gCount, playTime },
     players: {
-      [uid]: { name: "玩家1", hero: null, ready: false }
-    }
+      [uid]: { name: window.tempCreatorName, hero: null, ready: false }
+}
   });
 
   // 關掉彈窗
@@ -87,7 +93,7 @@ document.getElementById("confirm-create").addEventListener("click", async () => 
   document.getElementById("room-settings").style.display = "none";
 
   // ⭐⭐ 立刻跳進大廳 ⭐⭐
-  showLobby(roomId);
+  showLobby(roomId, uid);
 });
 function showLobby(roomId, uid) {
   const lobby = document.getElementById("room-lobby");
@@ -97,8 +103,35 @@ function showLobby(roomId, uid) {
   const roomRef = ref(database, "rooms/" + roomId);
 
   onValue(roomRef, snapshot => {
+
+    // ⭐ Host 顯示「開始遊戲」按鈕
+if (data.host === uid) {
+  document.getElementById("start-game-btn").style.display = "block";
+} else {
+  document.getElementById("start-game-btn").style.display = "none";
+}
+
+// ⭐ 全員準備才可開始
+const allReady = Object.values(data.players).every(p => p.ready);
+document.getElementById("start-game-btn").disabled = !allReady;
+
+// ⭐ Host 按下開始 → 改成 started
+document.getElementById("start-game-btn").onclick = () => {
+  update(ref(database, `rooms/${roomId}`), {
+    status: "started"
+  });
+};
+
+// ⭐ 遊戲開始 → 切畫面
+if (data.status === "started") {
+  document.getElementById("room-lobby").style.display = "none";
+  document.getElementById("game-screen").style.display = "block";
+}
     if (!snapshot.exists()) return;
     const data = snapshot.val();
+
+    const me = data.players[uid];
+    document.getElementById("ready-btn").textContent = me.ready ? "取消準備" : "準備";
 
     // 更新設定
     document.getElementById("lobby-mode").textContent = data.settings.mode;
@@ -118,34 +151,14 @@ function showLobby(roomId, uid) {
 
     // ⭐ 準備按鈕
     document.getElementById("ready-btn").onclick = () => {
-      update(ref(database, `rooms/${roomId}/players/${uid}`), {
-        ready: true
-      });
-    };
+    const meRef = ref(database, `rooms/${roomId}/players/${uid}`);
 
-    // ⭐ Host 顯示「開始遊戲」
-    if (data.host === uid) {
-      document.getElementById("start-game-btn").style.display = "block";
-    } else {
-      document.getElementById("start-game-btn").style.display = "none";
-    }
+  get(meRef).then(snap => {
+    const currReady = snap.val().ready || false;
+    update(meRef, { ready: !currReady }); // 反轉
+  });
+};
 
-    // ⭐ 全員準備才能開始
-    const allReady = Object.values(data.players).every(p => p.ready);
-    document.getElementById("start-game-btn").disabled = !allReady;
-
-    // ⭐ Host 按下開始遊戲
-    document.getElementById("start-game-btn").onclick = () => {
-      update(ref(database, `rooms/${roomId}`), {
-        status: "started"
-      });
-    };
-
-    // ⭐ 遊戲開始 → 切到 16:9 畫面
-    if (data.status === "started") {
-      document.getElementById("room-lobby").style.display = "none";
-      document.getElementById("game-screen").style.display = "block";
-    }
   });
 }
 
