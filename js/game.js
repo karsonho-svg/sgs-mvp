@@ -104,62 +104,67 @@ function showLobby(roomId, uid) {
 
   onValue(roomRef, snapshot => {
 
-    // ⭐ Host 顯示「開始遊戲」按鈕
-if (data.host === uid) {
-  document.getElementById("start-game-btn").style.display = "block";
-} else {
-  document.getElementById("start-game-btn").style.display = "none";
-}
+  if (!snapshot.exists()) return;
+  const data = snapshot.val();
 
-// ⭐ 全員準備才可開始
-const allReady = Object.values(data.players).every(p => p.ready);
-document.getElementById("start-game-btn").disabled = !allReady;
+  const me = data.players[uid];
 
-// ⭐ Host 按下開始 → 改成 started
+  // 顯示準備 / 取消準備
+  document.getElementById("ready-btn").textContent =
+    me.ready ? "取消準備" : "準備";
+
+  // 更新設定
+  document.getElementById("lobby-mode").textContent = data.settings.mode;
+  document.getElementById("lobby-count").textContent = data.settings.count;
+  document.getElementById("lobby-pool").textContent = data.settings.pool.join("、");
+  document.getElementById("lobby-gcount").textContent = data.settings.generalChoice;
+  document.getElementById("lobby-playtime").textContent = data.settings.playTime + " 秒";
+
+  // 玩家列表
+  const list = document.getElementById("player-list");
+  list.innerHTML = "";
+  Object.values(data.players).forEach(p => {
+    const li = document.createElement("li");
+    li.textContent = p.name + (p.ready ? " ✔️" : "");
+    list.appendChild(li);
+  });
+
+  // Host 才能看到開始遊戲
+  const startBtn = document.getElementById("start-game-btn");
+  if (data.host === uid) {
+    startBtn.style.display = "block";
+  } else {
+    startBtn.style.display = "none";
+  }
+
+  // 全員準備才可開始
+  const allReady = Object.values(data.players).every(p => p.ready);
+  startBtn.disabled = !allReady;
+
+  // 如果已經開始 → 進遊戲畫面
+  if (data.status === "started") {
+    document.getElementById("room-lobby").style.display = "none";
+    document.getElementById("game-screen").style.display = "block";
+  }
+});
+
+  // ⭐ 準備鍵（外面綁一次，不會重複）
+document.getElementById("ready-btn").onclick = () => {
+  const meRef = ref(database, `rooms/${roomId}/players/${uid}`);
+  get(meRef).then(snap => {
+    const currReady = snap.val().ready || false;
+    update(meRef, { ready: !currReady });
+  });
+};
+
+// ⭐ Host 開始遊戲（外面綁一次）
 document.getElementById("start-game-btn").onclick = () => {
   update(ref(database, `rooms/${roomId}`), {
     status: "started"
   });
 };
 
-// ⭐ 遊戲開始 → 切畫面
-if (data.status === "started") {
-  document.getElementById("room-lobby").style.display = "none";
-  document.getElementById("game-screen").style.display = "block";
-}
-    if (!snapshot.exists()) return;
-    const data = snapshot.val();
-
-    const me = data.players[uid];
-    document.getElementById("ready-btn").textContent = me.ready ? "取消準備" : "準備";
-
-    // 更新設定
-    document.getElementById("lobby-mode").textContent = data.settings.mode;
-    document.getElementById("lobby-count").textContent = data.settings.count;
-    document.getElementById("lobby-pool").textContent = data.settings.pool.join("、");
-    document.getElementById("lobby-gcount").textContent = data.settings.generalChoice;
-    document.getElementById("lobby-playtime").textContent = data.settings.playTime + " 秒";
-
-    // 更新玩家列表
-    const list = document.getElementById("player-list");
-    list.innerHTML = "";
-    Object.values(data.players).forEach(p => {
-      const li = document.createElement("li");
-      li.textContent = p.name + (p.ready ? " ✔️" : "");
-      list.appendChild(li);
-    });
-
-    // ⭐ 準備按鈕
-    document.getElementById("ready-btn").onclick = () => {
-    const meRef = ref(database, `rooms/${roomId}/players/${uid}`);
-
-  get(meRef).then(snap => {
-    const currReady = snap.val().ready || false;
-    update(meRef, { ready: !currReady }); // 反轉
-  });
-};
-
-  });
+  
 }
 
 async function joinRoom(roomId, playerName) {
