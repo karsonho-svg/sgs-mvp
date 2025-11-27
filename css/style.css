@@ -427,3 +427,7 @@ img {
   margin-top: 12px;
   font-size: 20px;
 }
+
+#name-modal {
+  text-align:center;
+}

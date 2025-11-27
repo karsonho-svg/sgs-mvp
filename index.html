@@ -37,7 +37,7 @@
 
     <div class="setting-row">
       <span>3. 選將底池：</span>
-      <label><input type="checkbox" value="standard" class="pool"> 標準將</label>
+      <label><input type="checkbox" value="standard" class="pool"> 標將</label>
     </div>
 
     <div class="setting-row">
@@ -77,8 +77,9 @@
 
     <h3>玩家列表</h3>
     <ul id="player-list"></ul>
-
-    <button id="start-game-btn" class="sgs-btn">開始遊戲</button>
+    
+    <button id="ready-btn" class="sgs-btn" style="margin-top: 10px;">準備</button>
+    <button id="start-game-btn" class="sgs-btn" style="margin-top: 10px; display:none;">開始遊戲</button>
   </div>
 
   <!-- 📱 旋轉提示 -->
@@ -101,6 +102,17 @@
     <div id="battlefield"></div>
     <div id="hand-cards"></div>
   </div>
+  <!-- 🔥 訪客輸入名稱的彈窗 -->
+<div id="name-modal-bg" class="modal-bg" style="display:none;"></div>
+
+<div id="name-modal" class="modal-window" style="display:none; width:300px;">
+  <h3>請輸入你的名稱</h3>
+  <input id="player-name-input" 
+         type="text" 
+         placeholder="輸入名稱..." 
+         style="width:100%; padding:8px; font-size:18px; margin:10px 0;">
+  <button id="confirm-name-btn" class="sgs-btn" style="width:100%;">確認</button>
+</div>
 
   <!-- 卡片展示 -->
   <div id="card-area"></div>
