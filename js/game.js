@@ -300,20 +300,20 @@ function showNameInput(callback) {
 }
 
 // 下面兩段可留可刪（取決於你要不要 debug 顯示全牌）
-// const deckRef = ref(database, 'deck');
-// onValue(deckRef, (snapshot) => {
-//   const deckData = snapshot.val();
-//   document.getElementById("card-area").innerHTML = "";
-//   Object.values(deckData).forEach(card => {
-//     renderCard(card);
-//   });
-// });
-
-const generalsRef = ref(database, "generals");
-onValue(generalsRef, snapshot => {
-  const data = snapshot.val();
-  document.getElementById("general-area").innerHTML = "";
-  Object.values(data).forEach(g => {
-    renderGeneral(g);
+const deckRef = ref(database, 'deck');
+onValue(deckRef, (snapshot) => {
+  const deckData = snapshot.val();
+  document.getElementById("card-area").innerHTML = "";
+  Object.values(deckData).forEach(card => {
+    renderCard(card);
   });
 });
+
+// const generalsRef = ref(database, "generals");
+// onValue(generalsRef, snapshot => {
+//   const data = snapshot.val();
+//   document.getElementById("general-area").innerHTML = "";
+//   Object.values(data).forEach(g => {
+//     renderGeneral(g);
+//   });
+// });
