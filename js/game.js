@@ -139,8 +139,12 @@ function showLobby(roomId, uid) {
 
   onValue(roomRef, snapshot => {
 
+    
+
   if (!snapshot.exists()) return;
   const data = snapshot.val();
+
+  if (!data.players[uid]) return;   // 🔥 保護，不會再報錯
 
   const me = data.players[uid];
 
