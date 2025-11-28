@@ -6,7 +6,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: black;  /* 手機寬高不符時，外面黑邊 */
+  background: none;  /* 手機寬高不符時，外面黑邊 */
 }
 
 /* 固定 16:9 遊戲畫面 */
@@ -18,7 +18,7 @@ html, body {
   width: 100vw;
   height: calc(100vw * 9 / 16);
   transform: translate(-50%, -50%);
-  background: black;
+  background: none;
   z-index: 9999;
 }
 /* 手機直向提示旋轉 */
