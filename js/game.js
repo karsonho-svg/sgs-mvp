@@ -72,7 +72,7 @@ document.getElementById("confirm-create").addEventListener("click", async () => 
   const playTime = document.getElementById("play-time").value;
 
   if (!mode || !count) {
-    alert("請先把設定選好");
+    alert("请先把设定调好");
     return;
   }
 
@@ -111,7 +111,7 @@ function showLobby(roomId, uid) {
 
   // 顯示準備 / 取消準備
   document.getElementById("ready-btn").textContent =
-    me.ready ? "取消準備" : "準備";
+    me.ready ? "取消准备" : "准备";
 
   // 更新設定
   document.getElementById("lobby-mode").textContent = data.settings.mode;
@@ -172,7 +172,7 @@ async function joinRoom(roomId, playerName) {
   const snapshot = await get(roomRef);
 
   if (!snapshot.exists()) {
-    alert("房號不存在！");
+    alert("房号不存在！");
     return;
   }
 
@@ -189,7 +189,7 @@ async function joinRoom(roomId, playerName) {
 
 // 使用者按「加入房間」
 document.getElementById("join-room-btn").addEventListener("click", async () => {
-  const roomId = prompt("請輸入房號：");
+  const roomId = prompt("请输入房号：");
   if (!roomId) return;
 
   // 先要求輸入名稱
@@ -208,7 +208,7 @@ function showNameInput(callback) {
 
   confirmBtn.onclick = () => {
     const name = document.getElementById("player-name-input").value.trim();
-    if (!name) return alert("請輸入名稱喔～");
+    if (!name) return alert("请输入名称");
 
     bg.style.display = "none";
     modal.style.display = "none";
