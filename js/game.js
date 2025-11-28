@@ -139,6 +139,8 @@ function showLobby(roomId, uid) {
 
   onValue(roomRef, snapshot => {
 
+    console.log("DEBUG UID =", uid);
+
     
 
   if (!snapshot.exists()) return;
