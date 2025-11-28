@@ -1,5 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
 import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+import { connectDatabaseEmulator } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+
+database.app.options.databaseAuthVariableOverride = null;
 
     // 1️⃣ 初始化 Firebase
     const firebaseConfig = {
