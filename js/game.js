@@ -139,57 +139,91 @@ function showLobby(roomId, uid) {
 
   onValue(roomRef, snapshot => {
 
-    
-
-    
-
   if (!snapshot.exists()) return;
   const data = snapshot.val();
 
-  if (!data.players[uid]) return;   // 🔥 保護，不會再報錯
+  // 🔥 若玩家不存在（刷新太快 or 剛退出房間）→ 不處理
+  if (!data.players || !data.players[uid]) return;
 
   const me = data.players[uid];
 
-  // 顯示準備 / 取消準備
+
+  // ===========================
+  // ⭐ 更新「準備 / 取消準備」按鈕
+  // ===========================
   document.getElementById("ready-btn").textContent =
     me.ready ? "取消准备" : "准备";
 
-  // 更新設定
+
+  // ===========================
+  // ⭐ 更新設定資訊
+  // ===========================
   document.getElementById("lobby-mode").textContent = data.settings.mode;
   document.getElementById("lobby-count").textContent = data.settings.count;
   document.getElementById("lobby-pool").textContent = data.settings.pool.join("、");
   document.getElementById("lobby-gcount").textContent = data.settings.generalChoice;
   document.getElementById("lobby-playtime").textContent = data.settings.playTime + " 秒";
 
-  // 玩家列表
+
+  // ===========================
+  // ⭐ 更新玩家列表
+  // ===========================
   const list = document.getElementById("player-list");
   list.innerHTML = "";
-  Object.values(data.players).forEach(p => {
+
+  Object.entries(data.players).forEach(([pid, p]) => {
     const li = document.createElement("li");
-    li.textContent = p.name + (p.ready ? " ✔️" : "");
+    li.textContent = p.name + (p.ready ? " ✔️" : "") + (pid === data.host ? "（房主）" : "");
     list.appendChild(li);
   });
 
-  // Host 才能看到開始遊戲
-  const startBtn = document.getElementById("start-game-btn");
-  if (data.host === uid) {
-    startBtn.style.display = "block";
-  } else {
-    startBtn.style.display = "none";
+
+  // ===========================
+  // ⭐ 房主若離開 → 自動換房主
+  // ===========================
+  if (!data.players[data.host]) {
+
+    const allPlayers = Object.keys(data.players);
+
+    if (allPlayers.length === 0) {
+      // 房間沒人 → 自動刪除
+      set(ref(database, `rooms/${roomId}`), null);
+      return;
+    }
+
+    const newHost = allPlayers[0];   // 指定第一位玩家
+    update(ref(database, `rooms/${roomId}`), { host: newHost });
   }
 
-  // ⭐ 檢查人數是否達標
+
+  // ===========================
+  // ⭐ 房主專屬按鈕（開始遊戲 / 刪除房間）
+  // ===========================
+  const startBtn = document.getElementById("start-game-btn");
+  const deleteBtn = document.getElementById("delete-room-btn");
+
+  const isHost = (data.host === uid);
+
+  // 顯示或隱藏按鈕
+  startBtn.style.display = isHost ? "block" : "none";
+  deleteBtn.style.display = isHost ? "block" : "none";
+
+
+  // ===========================
+  // ⭐ 檢查是否達到開始條件
+  // ===========================
   const currentPlayerCount = Object.values(data.players).length;
   const requiredCount = Number(data.settings.count);
-  const full = currentPlayerCount >= requiredCount;
 
-//  是否全部準備
+  const full = currentPlayerCount >= requiredCount;
   const allReady = Object.values(data.players).every(p => p.ready);
 
-// ⭐ 兩個條件都要達成才能開始
-  document.getElementById("start-game-btn").disabled = !(full && allReady);
+  startBtn.disabled = !(full && allReady);
 
-  // 如果已經開始 → 進遊戲畫面
+
+  // ===========================
+  // ⭐ 遊戲開始 → 進入遊戲畫面
+  // ===========================
   if (data.status === "started") {
     document.getElementById("room-lobby").style.display = "none";
     document.getElementById("game-screen").style.display = "block";
@@ -246,6 +280,33 @@ document.getElementById("exit-room-btn").onclick = async () => {
   document.getElementById("room-ui").style.display = "block";
 };
 
+// =========================
+// ⭐ 房主刪除房間按鈕
+// =========================
+document.getElementById("delete-room-btn").onclick = () => {
+  const ok = confirm("確定要刪除房間嗎？所有玩家都會被踢出。");
+  if (!ok) return;
+
+  // 直接刪除房間整個資料
+  set(ref(database, `rooms/${roomId}`), null);
+
+  alert("房間已刪除");
+  location.reload();   // 回首頁
+};
+
+// =========================
+// ⭐ 玩家退出房間
+// =========================
+document.getElementById("leave-room-btn").onclick = () => {
+  const meRef = ref(database, `rooms/${roomId}/players/${uid}`);
+
+  // 先刪掉自己
+  update(meRef, null).then(() => {
+    alert("你已退出房間");
+    location.reload();
+  });
+};
+
   
 }
 
@@ -300,14 +361,14 @@ function showNameInput(callback) {
 }
 
 // 下面兩段可留可刪（取決於你要不要 debug 顯示全牌）
-const deckRef = ref(database, 'deck');
-onValue(deckRef, (snapshot) => {
-  const deckData = snapshot.val();
-  document.getElementById("card-area").innerHTML = "";
-  Object.values(deckData).forEach(card => {
-    renderCard(card);
-  });
-});
+// const deckRef = ref(database, 'deck');
+// onValue(deckRef, (snapshot) => {
+//   const deckData = snapshot.val();
+//   document.getElementById("card-area").innerHTML = "";
+//   Object.values(deckData).forEach(card => {
+//     renderCard(card);
+//   });
+// });
 
 // const generalsRef = ref(database, "generals");
 // onValue(generalsRef, snapshot => {
