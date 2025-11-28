@@ -1,3 +1,4 @@
+#start-game-btn { pointer-events: auto; }
 /* 整頁鎖定，不讓捲動 */
 html, body {
   margin: 0;

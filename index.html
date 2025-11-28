@@ -34,6 +34,13 @@
       <span>2. 人數：</span>
       <select id="player-count" disabled></select>
     </div>
+    <!-- ⭐ 身份組合選擇（只有 6 人與 8 人才會出現） -->
+    <div class="setting-row" id="role-group-row" style="display:none;">
+      <span>身份組合：</span>
+      <select id="role-group-select">
+          <option value="">請選擇</option>
+      </select>
+    </div>
 
     <div class="setting-row">
       <span>3. 選將底池：</span>
@@ -81,6 +88,7 @@
     <button id="ready-btn" class="sgs-btn" style="margin-top: 10px;">准备</button>
     <button id="start-game-btn" class="sgs-btn" style="margin-top: 10px; display:none;">开始游戏</button>
   </div>
+  <button id="exit-room-btn" class="sgs-btn" style="margin-top:12px;">退出房間</button>
 
   <!-- 📱 旋轉提示 -->
   <div id="rotate-tip" style="

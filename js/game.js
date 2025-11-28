@@ -51,11 +51,31 @@ document.getElementById("mode-select").addEventListener("change", function() {
 });
 
 document.getElementById("player-count").addEventListener("change", function() {
-  const count = this.value;
+  const count = Number(this.value);
   const roles = identityModes[count];
 
-  console.log("身份組合：", roles);
-  // 未來 UI 會顯示
+  const roleRow = document.getElementById("role-group-row");
+  const roleSelect = document.getElementById("role-group-select");
+
+  if (!roles) {
+    roleRow.style.display = "none";
+    return;
+  }
+
+  // 只有 6 人 / 8 人才顯示身份組合
+  if (roles.length > 1) {
+    roleRow.style.display = "flex";
+
+    roleSelect.innerHTML = `<option value="">請選擇</option>`;
+    roles.forEach((r, i) => {
+      const op = document.createElement("option");
+      op.value = r;
+      op.textContent = `組合 ${i+1}：${r}`;
+      roleSelect.appendChild(op);
+    });
+  } else {
+    roleRow.style.display = "none";
+  }
 });
 
 document.getElementById("confirm-create").addEventListener("click", async () => {
@@ -65,8 +85,14 @@ document.getElementById("confirm-create").addEventListener("click", async () => 
   const poolCheckboxes = document.querySelectorAll(".pool");
   let pool = [];
   poolCheckboxes.forEach(cb => {
-    if (cb.checked) pool.push(cb.value);
-  });
+  if (cb.checked) pool.push(cb.value);
+});
+
+// ✨ 新增：選將底池必須至少一個
+if (pool.length === 0) {
+  alert("請至少選擇一個選將底池！");
+  return;
+}
 
   const gCount = document.getElementById("general-count").value;
   const playTime = document.getElementById("play-time").value;
@@ -79,14 +105,23 @@ document.getElementById("confirm-create").addEventListener("click", async () => 
   const roomId = generateRoomId();
   const uid = "player_" + Math.floor(Math.random() * 99999);
 
-  await set(ref(database, "rooms/" + roomId), {
-    host: uid,
-    status: "waiting",
-    settings: { mode, count, pool, generalChoice: gCount, playTime },
-    players: {
-      [uid]: { name: window.tempCreatorName, hero: null, ready: false }
-}
-  });
+  const roleGroup = document.getElementById("role-group-select").value;
+
+await set(ref(database, "rooms/" + roomId), {
+  host: uid,
+  status: "waiting",
+  settings: { 
+    mode, 
+    count, 
+    pool, 
+    generalChoice: gCount, 
+    playTime,
+    roleGroup: roleGroup || null   // ⭐ 儲存身份組合
+  },
+  players: {
+    [uid]: { name: window.tempCreatorName, hero: null, ready: false }
+  }
+});
 
   // 關掉彈窗
   document.getElementById("modal-bg").style.display = "none";
@@ -137,9 +172,16 @@ function showLobby(roomId, uid) {
     startBtn.style.display = "none";
   }
 
-  // 全員準備才可開始
+  // ⭐ 檢查人數是否達標
+  const currentPlayerCount = Object.values(data.players).length;
+  const requiredCount = Number(data.settings.count);
+  const full = currentPlayerCount >= requiredCount;
+
+//  是否全部準備
   const allReady = Object.values(data.players).every(p => p.ready);
-  startBtn.disabled = !allReady;
+
+// ⭐ 兩個條件都要達成才能開始
+  document.getElementById("start-game-btn").disabled = !(full && allReady);
 
   // 如果已經開始 → 進遊戲畫面
   if (data.status === "started") {
@@ -162,6 +204,40 @@ document.getElementById("start-game-btn").onclick = () => {
   update(ref(database, `rooms/${roomId}`), {
     status: "started"
   });
+};
+
+// ⭐ 退出房間
+document.getElementById("exit-room-btn").onclick = async () => {
+
+  const playerRef = ref(database, `rooms/${roomId}/players/${uid}`);
+  const roomRef = ref(database, `rooms/${roomId}`);
+
+  // 先取房間資料檢查 host
+  const snap = await get(roomRef);
+  if (!snap.exists()) return;
+  const data = snap.val();
+
+  // 🔥 如果退出的是 Host → 指派新 Host
+  if (data.host === uid) {
+    const otherPlayers = Object.keys(data.players).filter(id => id !== uid);
+
+    if (otherPlayers.length > 0) {
+      const newHost = otherPlayers[0];
+      await update(roomRef, { host: newHost });
+    }
+  }
+
+  // 刪除這個玩家
+  await update(roomRef, {
+    players: {
+      ...data.players,
+      [uid]: null
+    }
+  });
+
+  // UI 收回
+  document.getElementById("room-lobby").style.display = "none";
+  document.getElementById("room-ui").style.display = "block";
 };
 
   
