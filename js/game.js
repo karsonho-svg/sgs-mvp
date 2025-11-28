@@ -309,11 +309,11 @@ function showNameInput(callback) {
 //   });
 // });
 
-// const generalsRef = ref(database, "generals");
-// onValue(generalsRef, snapshot => {
-//   const data = snapshot.val();
-//   document.getElementById("general-area").innerHTML = "";
-//   Object.values(data).forEach(g => {
-//     renderGeneral(g);
-//   });
-// });
+const generalsRef = ref(database, "generals");
+onValue(generalsRef, snapshot => {
+  const data = snapshot.val();
+  document.getElementById("general-area").innerHTML = "";
+  Object.values(data).forEach(g => {
+    renderGeneral(g);
+  });
+});
