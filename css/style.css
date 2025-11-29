@@ -290,6 +290,7 @@ img {
   
 
   .sgs-btn {
+    font-family: "sgs-font";
     font-size: 22px;
     padding: 12px 28px;
     background: linear-gradient(135deg, #b8860b, #f0d58c);
