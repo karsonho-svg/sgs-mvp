@@ -43,7 +43,9 @@ html, body {
   font-family: "sgs-font";
   src: url(fonts/FZLBGBK.ttf); 
   font-family: "sgs-font2";
-  src: url(fonts/FZLE.ttf)
+  src: url(fonts/FZLE.ttf);
+  font-family: "sgs-font3";
+  src: url(fonts/simli.ttf)
 }
 
 .general-card,
@@ -292,7 +294,7 @@ img {
   
 
   .sgs-btn {
-    font-family: "sgs-font2";
+    font-family: "sgs-font3";
     font-size: 22px;
     padding: 12px 28px;
     background: linear-gradient(135deg, #b8860b, #f0d58c);
