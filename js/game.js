@@ -297,7 +297,7 @@ document.getElementById("delete-room-btn").onclick = () => {
 // =========================
 // ⭐ 玩家退出房間
 // =========================
-document.getElementById("leave-room-btn").onclick = () => {
+document.getElementById("exit-room-btn").onclick = () => {
   const meRef = ref(database, `rooms/${roomId}/players/${uid}`);
 
   // 先刪掉自己
