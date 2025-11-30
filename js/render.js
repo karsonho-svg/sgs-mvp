@@ -43,7 +43,7 @@ function getHpDots(currHp, maxHp) {
 
   const pattern = hpPatternMap[maxHp][currHp];
   return pattern.map(v => 
-    `<img class="hp-dot-img" src="sgs-images/photos/magatama/${v}.png">`
+    `<img class="hp-dot-img" src="images/photos/magatama/${v}.png">`
   ).join("");
 }
 
@@ -73,7 +73,7 @@ function addGeneralPressEffect(cardElement) {
 function renderGeneral(g) {
 
   const frame = factionImageMap[g.kingdom];
-  const imgPath = `sgs-images/heroes/generals/biao_${g.id}.png`;
+  const imgPath = `images/heroes/generals/biao_${g.id}.png`;
 
   const currHp = g.maxHp;
   const maxHp = g.maxHp;
@@ -85,7 +85,7 @@ function renderGeneral(g) {
 
   const html = `
     <div class="general-card"
-         style="background-image: url('sgs-images/photos/back/${frame}'); background-size: cover;">
+         style="background-image: url('images/photos/back/${frame}'); background-size: cover;">
 
       <div class="general-side">
         <div class="general-name-vert">${g.name}</div>
@@ -329,7 +329,7 @@ const imageNameMap = {
   
 
   let fileName = imageNameMap[card.id] || `${card.id}.png`;
-  const imgPath = `sgs-images/cards/${folder}/${fileName}`;
+  const imgPath = `images/cards/${folder}/${fileName}`;
 
   // 4️⃣ 武器顯示「範圍：X」
   const rangeHTML =
@@ -352,7 +352,7 @@ const imageNameMap = {
 
   const html = `
     <div class="card">
-      <img src="sgs-images/cards/card-base/card-base.png" class="card-base">
+      <img src="images/cards/card-base/card-base.png" class="card-base">
 
       <div class="card-suit-rank" style="color:${suitColor}">
         <div class="card-rank">${card.rank}</div>
