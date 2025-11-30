@@ -78,7 +78,15 @@ img {
 img {
   -webkit-user-drag: none;
 
-
+}
+/* 小圖示（房主 / ready） */
+.ui-icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-left: 6px;
+  object-fit: contain;
+  pointer-events: none;
 }
 /* ===== 武將卡外框 ===== */
 .general-card {

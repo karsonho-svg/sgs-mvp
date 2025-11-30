@@ -173,7 +173,11 @@ function showLobby(roomId, uid) {
 
   Object.entries(data.players).forEach(([pid, p]) => {
     const li = document.createElement("li");
-    li.textContent = p.name + (p.ready ? " ✔️" : "") + (pid === data.host ? "（房主）" : "");
+    li.innerHTML = `
+      ${p.name}
+      ${p.ready ? '<img src="../images/photos/room/ready.png" class="ui-icon"/>' : ''}
+      ${pid === data.host ? '<img src="../images/photos/room/host.png" class="ui-icon"/>' : ''}
+    `;
     list.appendChild(li);
   });
 
