@@ -85,8 +85,8 @@ img {
 }
 /* 小圖示（房主 / ready） */
 .ui-icon {
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   vertical-align: middle;
   margin-left: 6px;
   object-fit: contain;
