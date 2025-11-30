@@ -252,32 +252,31 @@ document.getElementById("exit-room-btn").onclick = async () => {
   const playerRef = ref(database, `rooms/${roomId}/players/${uid}`);
   const roomRef = ref(database, `rooms/${roomId}`);
 
-  // 先取房間資料檢查 host
+  // 拿房間資料
   const snap = await get(roomRef);
   if (!snap.exists()) return;
   const data = snap.val();
 
-  // 🔥 如果退出的是 Host → 指派新 Host
+  // 如果是房主 → 指定新房主
   if (data.host === uid) {
-    const otherPlayers = Object.keys(data.players).filter(id => id !== uid);
+    const others = Object.keys(data.players).filter(id => id !== uid);
 
-    if (otherPlayers.length > 0) {
-      const newHost = otherPlayers[0];
-      await update(roomRef, { host: newHost });
+    if (others.length > 0) {
+      await update(roomRef, { host: others[0] });
+    } else {
+      // 沒其他玩家 → 刪除房間
+      await set(roomRef, null);
+      alert("房间已解散");
+      location.reload();
+      return;
     }
   }
 
-  // 刪除這個玩家
-  await update(roomRef, {
-    players: {
-      ...data.players,
-      [uid]: null
-    }
-  });
+  // 🔥 正確刪除玩家（只能用 set null）
+  await set(playerRef, null);
 
-  // UI 收回
-  document.getElementById("room-lobby").style.display = "none";
-  document.getElementById("room-ui").style.display = "block";
+  alert("你已退出房间");
+  location.reload();
 };
 
 // =========================
@@ -292,19 +291,6 @@ document.getElementById("delete-room-btn").onclick = () => {
 
   alert("房間已刪除");
   location.reload();   // 回首頁
-};
-
-// =========================
-// ⭐ 玩家退出房間
-// =========================
-document.getElementById("exit-room-btn").onclick = () => {
-  const meRef = ref(database, `rooms/${roomId}/players/${uid}`);
-
-  // 先刪掉自己
-  update(meRef, null).then(() => {
-    alert("你已退出房間");
-    location.reload();
-  });
 };
 
   

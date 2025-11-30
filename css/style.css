@@ -127,6 +127,7 @@ img {
   display: none;
   z-index: 999;
   font-size: 14px;
+  font-family: "sgs-font";
   line-height: 1.4;
 }
   
