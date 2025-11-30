@@ -15,40 +15,40 @@
     <button id="join-room-btn" class="sgs-btn">加入房间</button>
   </div>
 
-  <!-- 🔥 黑色透明背景 -->
+  <!--背景-->
   <div id="modal-bg" class="modal-bg" style="display:none;"></div>
 
-  <!-- 🔥 房間設定彈窗 -->
+  <!--房間設定彈窗-->
   <div id="room-settings" class="modal-window" style="display:none;">
-    <h2>房間設定</h2>
+    <h2>房间设定</h2>
 
     <div class="setting-row">
-      <span>1. 遊戲模式：</span>
+      <span>1. 游戏模式：</span>
       <select id="mode-select">
-        <option value="">請選擇</option>
-        <option value="identity">身分場</option>
+        <option value="">请选择</option>
+        <option value="identity">身份场</option>
       </select>
     </div>
 
     <div class="setting-row">
-      <span>2. 人數：</span>
+      <span>2. 人数：</span>
       <select id="player-count" disabled></select>
     </div>
-    <!-- ⭐ 身份組合選擇（只有 6 人與 8 人才會出現） -->
+    <!--身份組合選擇（只有 6 人與 8 人才會出現） -->
     <div class="setting-row" id="role-group-row" style="display:none;">
-      <span>身份組合：</span>
+      <span>身份组合：</span>
       <select id="role-group-select">
-          <option value="">請選擇</option>
+          <option value="">请选择</option>
       </select>
     </div>
 
     <div class="setting-row">
-      <span>3. 選將底池：</span>
-      <label><input type="checkbox" value="standard" class="pool"> 標將</label>
+      <span>3. 选将底池：</span>
+      <label><input type="checkbox" value="standard" class="pool"> 标将</label>
     </div>
 
     <div class="setting-row">
-      <span>4. 每人可選武將數：</span>
+      <span>4. 每人可选武将数：</span>
       <select id="general-count">
         <option value="1">1</option>
         <option value="3">3</option>
@@ -58,7 +58,7 @@
     </div>
 
     <div class="setting-row">
-      <span>5. 出牌時間：</span>
+      <span>5. 出牌时间：</span>
       <select id="play-time">
         <option value="10">10 秒</option>
         <option value="15">15 秒</option>
@@ -66,19 +66,19 @@
       </select>
     </div>
 
-    <button id="confirm-create" class="sgs-btn">建立房間</button>
+    <button id="confirm-create" class="sgs-btn">建立房间</button>
   </div>
 
-  <!-- ⭐⭐⭐ 房間大廳（要與 room-settings 分開） -->
+  <!--房間大廳（要與 room-settings 分開-->
   <div id="room-lobby" class="lobby-window" style="display:none;">
-    <h2>房間大廳</h2>
+    <h2>房间大厅</h2>
 
     <div class="lobby-info">
-      <p><strong>房號：</strong><span id="lobby-room-id"></span></p>
-      <p><strong>遊戲模式：</strong><span id="lobby-mode"></span></p>
-      <p><strong>人數：</strong><span id="lobby-count"></span></p>
-      <p><strong>選將底池：</strong><span id="lobby-pool"></span></p>
-      <p><strong>每人選將數：</strong><span id="lobby-gcount"></span></p>
+      <p><strong>房号：</strong><span id="lobby-room-id"></span></p>
+      <p><strong>游戏模式：</strong><span id="lobby-mode"></span></p>
+      <p><strong>人数</strong><span id="lobby-count"></span></p>
+      <p><strong>选将底池：</strong><span id="lobby-pool"></span></p>
+      <p><strong>每人选将数：</strong><span id="lobby-gcount"></span></p>
       <p><strong>出牌時間：</strong><span id="lobby-playtime"></span></p>
     </div>
 
@@ -91,7 +91,7 @@
     <button id="delete-room-btn" class="sgs-btn" style="margin-top:10px; background: #c46762; color: white; display:none;">删除房间</button>
   </div>
 
-  <!-- 📱 旋轉提示 -->
+  <!-- 手機旋轉提示 -->
   <div id="rotate-tip" style="
     display:none;
     width:100vw;
@@ -101,7 +101,7 @@
     color:white;
     font-size:28px;
     background:black;">
-    📱 請將手機橫向使用以開始遊戲
+     请将手机横向以开始游戏
   </div>
 
   <!-- 🎮 遊戲畫面（永遠放在最底部） -->
@@ -115,7 +115,7 @@
 <div id="name-modal-bg" class="modal-bg" style="display:none;"></div>
 
 <div id="name-modal" class="modal-window" style="display:none; width:300px;">
-  <h3>請輸入你的名稱</h3>
+  <h3>请输入你的名称</h3>
   <input id="player-name-input" 
          type="text" 
          placeholder="輸入名稱..." 
@@ -123,7 +123,7 @@
   <button id="confirm-name-btn" class="sgs-btn" style="width:100%;">確認</button>
 </div>
 <div id="identity-select" class="modal-window" style="display:none;">
-  <h3>請選擇身份組合</h3>
+  <h3>请选择身份组合</h3>
   <div id="identity-options"></div>
 </div>
   <!-- 卡片展示 -->

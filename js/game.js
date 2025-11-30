@@ -40,7 +40,7 @@ document.getElementById("mode-select").addEventListener("change", function() {
   if (mode === "identity") {
     countSelect.disabled = false;
 
-    countSelect.innerHTML = "<option value=''>請選擇</option>";
+    countSelect.innerHTML = "<option value=''>请选择</option>";
     Object.keys(identityModes).forEach(n => {
       const op = document.createElement("option");
       op.value = n;
@@ -66,11 +66,11 @@ document.getElementById("player-count").addEventListener("change", function() {
   if (roles.length > 1) {
     roleRow.style.display = "flex";
 
-    roleSelect.innerHTML = `<option value="">請選擇</option>`;
+    roleSelect.innerHTML = `<option value="">请选择</option>`;
     roles.forEach((r, i) => {
       const op = document.createElement("option");
       op.value = r;
-      op.textContent = `組合 ${i+1}：${r}`;
+      op.textContent = `组合 ${i+1}：${r}`;
       roleSelect.appendChild(op);
     });
   } else {
@@ -90,7 +90,7 @@ document.getElementById("confirm-create").addEventListener("click", async () => 
 
 // ✨ 新增：選將底池必須至少一個
 if (pool.length === 0) {
-  alert("請至少選擇一個選將底池！");
+  alert("请至少选择一个选将底池！");
   return;
 }
 
@@ -283,13 +283,13 @@ document.getElementById("exit-room-btn").onclick = async () => {
 // ⭐ 房主刪除房間按鈕
 // =========================
 document.getElementById("delete-room-btn").onclick = () => {
-  const ok = confirm("確定要刪除房間嗎？所有玩家都會被踢出。");
+const ok = confirm("确定要删除房间吗？所有玩家都会被踢出！");
   if (!ok) return;
 
   // 直接刪除房間整個資料
   set(ref(database, `rooms/${roomId}`), null);
 
-  alert("房間已刪除");
+  alert("房间已删除");
   location.reload();   // 回首頁
 };
 
