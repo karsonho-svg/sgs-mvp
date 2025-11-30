@@ -32,15 +32,6 @@
   font-family: "sgs-font3";
   src: url("../fonts/simli.ttf") format("truetype");
 }
-#sgs-font1 {
-  font-family: "sgs-font1";
-}
-#sgs-font2 {
-  font-family: "sgs-font2";
-}
-#sgs-font3 {
-  font-family: "sgs-font3";
-}
 
 /* 整頁鎖定，不讓捲動 */
 html, body {
