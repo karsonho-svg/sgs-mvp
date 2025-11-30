@@ -175,8 +175,8 @@ function showLobby(roomId, uid) {
     const li = document.createElement("li");
     li.innerHTML = `
       ${p.name}
-      ${p.ready ? '<img src="../images/photos/room/ready.png" class="ui-icon"/>' : ''}
-      ${pid === data.host ? '<img src="../images/photos/room/host.png" class="ui-icon"/>' : ''}
+      ${p.ready ? '<img src="/sgs-mvp/images/photos/room/ready.png" class="ui-icon"/>' : ''}
+      ${pid === data.host ? '<img src="/sgs-mvp/images/photos/room/host.png" class="ui-icon"/>' : ''}
     `;
     list.appendChild(li);
   });
