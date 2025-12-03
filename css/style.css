@@ -1,16 +1,471 @@
+#start-game-btn { pointer-events: auto; }
+
+/* 手機直向提示旋轉 */
+@media screen and (orientation: portrait) {
+  #game-screen {
+    display: none;
+  }
+
+  #rotate-tip {
+    display: flex;
+  }
+}
+
+/* 橫向時正常顯示 */
+@media screen and (orientation: landscape) {
+  #rotate-tip {
+    display: none;
+  }
+}
+
+@font-face {
+  font-family: "sgs-font1";
+  src: url("../fonts/FZLBGBK.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "sgs-font2";
+  src: url("../fonts/FZLE.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "sgs-font3";
+  src: url("../fonts/simli.ttf") format("truetype");
+}
+
+/* 整頁鎖定，不讓捲動 */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: transparent;
+  background: none;  /* 手機寬高不符時，外面黑邊 */
+  font-family: "sgs-font1";
+}
+
+body.landing-bg {
+  background-image: url("../images/background/home-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 固定遊戲畫面 */
 #game-screen {
   display: none;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  aspect-ratio: 4 / 3;
   width: 100vw;
-  max-height: 100vh;
-  margin: auto;
-  background-image: url("../images/background/game-bg.jpg");
+  height: calc(100vw * 823 / 1920); /* 🟢 換比例 */
+  background-image: url("../images/background/game-bg.jpg"); /* 🟢 新增背景 */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   z-index: 9999;
+}
+
+
+
+
+.general-card,
+.card,
+img {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+img {
+  -webkit-user-drag: none;
+
+}
+/* 小圖示（房主 / ready） */
+.ui-icon {
+  width: 70px;
+  height: 70px;
+  vertical-align: middle;
+  margin-left: 6px;
+  object-fit: contain;
+  pointer-events: none;
+}
+/* ===== 武將卡外框 ===== */
+.general-card {
+  width: 280px;
+  height: 420px;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: row;
+}
+
+/* ===== 左側勢力欄 ===== */
+.general-side {
+  width: 60px;     /* 依官方模板寬度 */
+  height: 100%;
+  position: relative;
+}
+
+/* 名字直排 */
+.general-name-vert {
+  font-family: "sgs-font";
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 26px;
+  font-weight: 900;
+  color: white;
+  position: absolute;
+  left: 5px;
+  top: 80px;   /* 往下移一點 */
+}
+
+/* 血量（圖片） */
+.hp-area {
+  position: absolute;
+  bottom: 50px;
+  left: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hp-dot-img {
+  width: 26px;
+  height: 26px;
+}
+
+
+
+
+
+/* 技能框 */
+.skill-box {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.85);
+  border-radius: 10px;
+  color: white;
+  display: none;
+  z-index: 999;
+  font-size: 14px;
+  font-family: "sgs-font1";
+  line-height: 1.4;
+}
+  
+ 
+
+.hp-fraction {
+  font-size: 20px;
+  color: white;
+  font-weight: 900;
+}
+
+/* 身份圈 */
+.identity-tag {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid #333;
+  font-size: 20px;
+  font-weight: 900;
+  color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+/* 右下方版本圈 */
+.general-edition {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #333;
+  font-size: 16px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+
+
+.card-effect-box {
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  max-width: 180px;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  font-size: 14px;
+  border-radius: 8px;
+  line-height: 1.4;
+  display: none;
+  z-index: 999;
+  pointer-events: none; /* 不要讓滑鼠影響 */
+}
+
+
+  .card-mount {
+  position: absolute;
+  top: 58px;           /* 和範圍差不多高度 */
+  left: 12px;          /* 放左邊 */
+  font-size: 20px;
+  font-weight: 900;
+  color: #333;
+  text-shadow: 0 0 4px black;
+  z-index: 4;
+}
+.card {
+  position: relative;
+  width: 240px;
+  height: 360px;
+  user-select: none;
+
+  border: 2px solid black;     /* 🔥 新增外框（細黑線） */
+  border-radius: 12px;         /* 小圓角更好看 */
+  box-sizing: border-box;      /* 確保不會把卡撐大 */
+}
+
+/* 卡片底框 */
+.card-base {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 10px;
+}
+
+/* 武器圖片：下方 3/4 */
+/* 卡名：更往上提 */
+.card-name {
+  position: absolute;
+  top: 28px;                 /* 🔥 往上移很多，更接近官方位置 */
+  width: 100%;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 900;
+  color: #333;
+  text-shadow: 0 0 4px black;
+  z-index: 4;
+}
+
+/* 攻擊範圍：放在卡名右下 */
+.card-range {
+  position: absolute;
+  top: 62px;              
+  right: 12px;
+  font-size: 20px;
+  color: #333;
+  font-weight: 700;
+  text-shadow: 0 0 4px black;
+  z-index: 4;
+}
+
+/* 武器圖片保持佔下方 3/4 */
+.card-img img {
+  position: absolute;
+  width: 100%;
+  height: 75%;
+  bottom: 0;
+  left: 0;
+  object-fit: cover;
+  z-index: 2;
+  border-radius: 0 0 10px 10px;
+}
+
+/* 左上：點數 + 花色 */
+.card-suit-rank {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 4;
+  font-weight: 900;
+}
+
+.card-rank {
+  font-size: 32px;
+  line-height: 30px;
+}
+
+.card-suit {
+  font-size: 26px;
+  line-height: 22px;
+}
+
+/* 卡名：放在上面 1/4 區域的中間 */
+
+  
+
+  .sgs-btn {
+    font-family: "sgs-font2";
+    font-size: 22px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #b8860b, #f0d58c);
+    border: 3px solid #8b6b2a;
+    border-radius: 12px;
+    color: #4a2f00;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+    box-shadow: 0 4px 0 #8b6b2a, 0 8px 15px rgba(0,0,0,0.3);
+    letter-spacing: 2px;
+  }
+
+  .sgs-btn:hover {
+    background: linear-gradient(135deg, #cfa84e, #ffe9b0);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 0 #8b6b2a, 0 12px 20px rgba(0,0,0,0.4);
+  }
+
+  .sgs-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #8b6b2a, 0 4px 8px rgba(0,0,0,0.4);
+  }
+  /* === 調整左側：名字 & 勾玉 === */
+
+/* 武將名字（往左移 + 稍微往下移一點） */
+.general-side .general-name-vert {
+  margin-left: -6px;     /* ⭐ 向左 */
+  margin-top: 18px;      /* ⭐ 稍微往下 */
+}
+
+/* 勾玉整排往左 */
+.general-side .hp-area {
+  margin-left: -8px;     /* ⭐ 左移 */
+}
+/* 右側容器（紅色區域） */
+/* 右側容器（紅色區域） */
+.general-main {
+  width: 120%;
+  height: 100%;
+  position: relative;
+  overflow: hidden; 
+}
+
+/* 裁切範圍（避免碰到上面的白色透明區）*/
+.general-art-wrapper {
+  position: absolute;
+  top: 3%;       /* 🔥 你可以調 3%~5%，讓上邊剛好對齊 */
+  left: 0;
+  width: 100%;
+  height: 94%;   /* 🔥 調 95~97%，讓下面不要超出 */
+  overflow: hidden;
+}
+
+/* 武將圖（真正要調的位置） */
+.general-art {
+  position: absolute;
+  width: 125%;        /* 🟢 調整大小 */
+  height: 115%;
+  object-fit: cover;
+  border-radius: 20px;
+
+  /* 🟢 控制水平 / 垂直位置 */
+  object-position: 60% 40%;  
+  /* X: 0% 最左 → 100% 最右
+     Y: 0% 最上 → 100% 最下 */
+}
+/* 🔥 彈窗黑色背景 */
+.modal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+}
+
+/* 🔥 彈窗主體 */
+.modal-window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 360px;
+  padding: 24px;
+  background: #f9f5e9;
+  border: 4px solid #8b6b2a;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  z-index: 1001;
+  font-family: "Noto Sans TC", sans-serif;
+}
+
+/* 🔥 每一項設定：橫向排列 */
+.setting-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0;
+  gap: 8px;
+}
+
+.setting-row span {
+  min-width: 130px; 
+  font-weight: 700;
+}
+#room-settings .setting-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+  font-size: 20px;
+}
+.lobby-window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px;
+  padding: 24px;
+  background: #fffdf6;
+  border: 4px solid #b88a2a;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  z-index: 1001;
+  font-size: 20px;
+}
+
+.lobby-info p {
+  margin: 6px 0;
+}
+
+#player-list {
+  margin-top: 12px;
+  font-size: 20px;
+}
+
+#name-modal {
+  text-align:center;
 }
