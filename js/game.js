@@ -400,7 +400,32 @@ function showNameInput(callback) {
 // ===========================
 function showGame(roomId, uid) {
     console.log("Game started for:", uid);
+    // ⭐ 顯示選將畫面
+    document.getElementById("choose-general-screen").style.display = "block";
+
     // （之後會逐步加入武將 / 手牌 / 回合資訊顯示）
+
+    // ⭐ 根據選將底池渲染武將列表
+    const generalListEl = document.getElementById("general-list");
+    generalListEl.innerHTML = "";
+
+    const settingsRef = ref(database, `rooms/${roomId}/settings`);
+    get(settingsRef).then(snap => {
+      if (!snap.exists()) return;
+      const settings = snap.val();
+      const pool = settings.pool || [];
+
+      // 從 generals 中篩選出屬於底池的武將
+      const filtered = Object.values(generals).filter(g => pool.includes(g.pool));
+
+      // 渲染每一張武將卡
+      filtered.forEach(g => {
+        const wrap = document.createElement("div");
+        wrap.className = "general-option";
+        wrap.appendChild(renderGeneral(g));
+        generalListEl.appendChild(wrap);
+      });
+    });
 }
 
 // 下面兩段可留可刪（取決於你要不要 debug 顯示全牌）

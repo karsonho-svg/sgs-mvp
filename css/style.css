@@ -545,3 +545,62 @@ img {
   margin: 0 auto 16px;
   display: block;
 }
+
+/* ⭐ 全螢幕選將畫面 */
+#choose-general-screen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../images/background/game-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: 99999;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* 身份圖片容器 */
+#choose-general-screen > div:first-child {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* 身份圖片 */
+#role-image {
+  height: 140px;
+  display: none;
+}
+
+/* 選將標題 */
+#choose-general-screen h2 {
+  text-align: center;
+  color: white;
+  text-shadow: 0 0 8px black;
+  font-size: 28px;
+  margin: 10px 0 20px 0;
+}
+
+/* 武將列表 */
+#general-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+/* 按鈕容器 */
+#choose-general-screen > div:last-child {
+  text-align: center;
+  margin-top: 30px;
+}
+
+/* 確認選將按鈕 */
+#confirm-general-btn {
+  font-size: 24px;
+  padding: 12px 36px;
+}

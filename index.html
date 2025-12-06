@@ -22,6 +22,23 @@
     <div id="battlefield"></div>
     <div id="hand-cards"></div>
   </div>
+  <!-- ⭐ 全螢幕選將畫面 -->
+  <div id="choose-general-screen">
+      <!-- 身份圖片（身份場才會顯示） -->
+      <div>
+          <img id="role-image" src="">
+      </div>
+
+      <!-- 選將區域 -->
+      <h2>请选择武将</h2>
+      <div id="general-list"></div>
+
+      <div>
+          <button id="confirm-general-btn" class="sgs-btn">
+              确认选择
+          </button>
+      </div>
+  </div>
   <!-- 禁止右鍵 -->
   <script>
     document.addEventListener("contextmenu", e => e.preventDefault());
