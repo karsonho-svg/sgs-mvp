@@ -249,12 +249,13 @@ function showLobby(roomId, uid) {
   startBtn.disabled = !(full && allReady);
 
 
-  // ===========================
-  // ⭐ 遊戲開始 → 進入遊戲畫面
-  // ===========================
+  // 🔥 遊戲開始 → 切換到遊戲畫面
   if (data.status === "started") {
-    document.getElementById("room-lobby").style.display = "none";
-    document.getElementById("game-wrapper").style.display = "block";
+      document.getElementById("room-lobby").style.display = "none";
+      document.getElementById("game-screen").style.display = "block";
+
+      showGame(roomId, uid);
+      return;
   }
 });
 
@@ -392,6 +393,14 @@ function showNameInput(callback) {
 
     callback(name);
   };
+}
+
+// ===========================
+// ⭐ 進入遊戲畫面
+// ===========================
+function showGame(roomId, uid) {
+    console.log("Game started for:", uid);
+    // （之後會逐步加入武將 / 手牌 / 回合資訊顯示）
 }
 
 // 下面兩段可留可刪（取決於你要不要 debug 顯示全牌）
