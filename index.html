@@ -16,13 +16,22 @@
     <button id="join-room-btn" class="sgs-btn">加入房间</button>
   </div>
 
-  <!--背景-->
+  <div id="game-screen" style="display:none;">
+    <div id="player-area"></div>
+    <div id="opponent-area"></div>
+    <div id="battlefield"></div>
+    <div id="hand-cards"></div>
+  </div>
+  <!-- 禁止右鍵 -->
+  <script>
+    document.addEventListener("contextmenu", e => e.preventDefault());
+  </script>
+  </div>
+
   <div id="modal-bg" class="modal-bg" style="display:none;"></div>
 
-  <!--房間設定彈窗-->
   <div id="room-settings" class="modal-window" style="display:none;">
     <h2>房间设定</h2>
-
     <div class="setting-row">
       <span>1. 游戏模式：</span>
       <select id="mode-select">
@@ -35,7 +44,7 @@
       <span>2. 人数：</span>
       <select id="player-count" disabled></select>
     </div>
-    <!--身份組合選擇（只有 6 人與 8 人才會出現） -->
+
     <div class="setting-row" id="role-group-row" style="display:none;">
       <span>身份组合：</span>
       <select id="role-group-select">
@@ -70,10 +79,8 @@
     <button id="confirm-create" class="sgs-btn">建立房间</button>
   </div>
 
-  <!--房間大廳（要與 room-settings 分開-->
   <div id="room-lobby" class="lobby-window" style="display:none;">
     <h2>房间大厅</h2>
-
     <div class="lobby-info">
       <p><strong>房号：</strong><span id="lobby-room-id"></span></p>
       <p><strong>游戏模式：</strong><span id="lobby-mode"></span></p>
@@ -82,59 +89,33 @@
       <p><strong>每人选将数：</strong><span id="lobby-gcount"></span></p>
       <p><strong>出牌時間：</strong><span id="lobby-playtime"></span></p>
     </div>
-
     <h3>玩家列表</h3>
     <ul id="player-list"></ul>
-    
     <button id="ready-btn" class="sgs-btn" style="margin-top: 10px;">准备</button>
     <button id="start-game-btn" class="sgs-btn" style="margin-top: 10px; display:none;">开始游戏</button>
     <button id="exit-room-btn" class="sgs-btn" style="margin-top: 10px; background:#c46762; color: white;">退出房间</button>
     <button id="delete-room-btn" class="sgs-btn" style="margin-top:10px; background: #c46762; color: white; display:none;">删除房间</button>
   </div>
 
-  <!-- 手機旋轉提示 -->
-  <div id="rotate-tip" style="
-    display:none;
-    width:100vw;
-    height:100vh;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    font-size:28px;
-    background:black;">
-     请将手机横向以开始游戏
+  <div id="rotate-tip" style="display:none; width:100vw; height:100vh; align-items:center; justify-content:center; color:white; font-size:28px; background:black;">
+    请将手机横向以开始游戏
   </div>
 
-  <div id="game-screen" style="display:none;">
-    <div id="player-area"></div>
-    <div id="opponent-area"></div>
-    <div id="battlefield"></div>
-    <div id="hand-cards"></div>
-  </div>
-  <!-- 🔥 訪客輸入名稱的彈窗 -->
-<div id="name-modal-bg" class="modal-bg" style="display:none;"></div>
+  <div id="name-modal-bg" class="modal-bg" style="display:none;"></div>
 
-<div id="name-modal" class="modal-window" style="display:none; width:300px;">
-  <h3>请输入你的名称</h3>
-  <input id="player-name-input" 
-         type="text" 
-         placeholder="輸入名稱..." 
-         style="width:100%; padding:8px; font-size:18px; margin:10px 0;">
-  <button id="confirm-name-btn" class="sgs-btn" style="width:100%;">确认</button>
-</div>
-<div id="identity-select" class="modal-window" style="display:none;">
-  <h3>请选择身份组合</h3>
-  <div id="identity-options"></div>
-</div>
-  <!-- 卡片展示 -->
+  <div id="name-modal" class="modal-window" style="display:none; width:300px;">
+    <h3>请输入你的名称</h3>
+    <input id="player-name-input" type="text" placeholder="輸入名稱..." style="width:100%; padding:8px; font-size:18px; margin:10px 0;">
+    <button id="confirm-name-btn" class="sgs-btn" style="width:100%;">确认</button>
+  </div>
+
+  <div id="identity-select" class="modal-window" style="display:none;">
+    <h3>请选择身份组合</h3>
+    <div id="identity-options"></div>
+  </div>
+
   <div id="card-area"></div>
-  <div id="general-area"></div> 
-
-  <!-- 禁止右鍵 -->
-  <script>
-    document.addEventListener("contextmenu", e => e.preventDefault());
-  </script>
-  </div>
+  <div id="general-area"></div>
 
   <!-- Scripts -->
   <script type="module" src="js/firebase.js"></script>
