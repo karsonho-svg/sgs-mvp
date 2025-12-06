@@ -36,10 +36,17 @@ const identityModes = {
 document.getElementById("mode-select").addEventListener("change", function() {
   const mode = this.value;
   const countSelect = document.getElementById("player-count");
+  const roleRow = document.getElementById("role-group-row");
+  const roleSelect = document.getElementById("role-group-select");
+
+  // 重置
+  countSelect.disabled = true;
+  countSelect.innerHTML = "<option value=''>请选择</option>";
+  if (roleRow) roleRow.style.display = "none";
+  if (roleSelect) roleSelect.innerHTML = "<option value=''>请选择</option>";
 
   if (mode === "identity") {
     countSelect.disabled = false;
-
     countSelect.innerHTML = "<option value=''>请选择</option>";
     Object.keys(identityModes).forEach(n => {
       const op = document.createElement("option");
@@ -47,6 +54,11 @@ document.getElementById("mode-select").addEventListener("change", function() {
       op.textContent = `${n} 人`;
       countSelect.appendChild(op);
     });
+  } else if (mode === "1v1") {
+    // 1v1 模式固定為 2 人，沒有身份組合
+    countSelect.disabled = true;
+    countSelect.innerHTML = "<option value='2'>2 人</option>";
+    if (roleRow) roleRow.style.display = "none";
   }
 });
 
@@ -101,11 +113,17 @@ if (pool.length === 0) {
     alert("请先把设定调好");
     return;
   }
+  const roleGroup = document.getElementById("role-group-select").value;
+  // ✨ 若為 6 人或 8 人，且有多組身份但未選擇
+  if ((count === "6" || count === "8") && identityModes[count].length > 1) {
+    if (!roleGroup) {
+      alert("请选择一个身份组合！");
+      return;
+    }
+  }
 
   const roomId = generateRoomId();
   const uid = "player_" + Math.floor(Math.random() * 99999);
-
-  const roleGroup = document.getElementById("role-group-select").value;
 
 await set(ref(database, "rooms/" + roomId), {
   host: uid,
@@ -119,7 +137,7 @@ await set(ref(database, "rooms/" + roomId), {
     roleGroup: roleGroup || null   // ⭐ 儲存身份組合
   },
   players: {
-    [uid]: { name: window.tempCreatorName, hero: null, ready: false }
+    [uid]: { name: window.tempCreatorName, hero: null, ready: false, seat: 1 }
   }
 });
 
@@ -244,10 +262,25 @@ document.getElementById("ready-btn").onclick = () => {
 };
 
 // ⭐ Host 開始遊戲（外面綁一次）
-document.getElementById("start-game-btn").onclick = () => {
-  update(ref(database, `rooms/${roomId}`), {
-    status: "started"
-  });
+document.getElementById("start-game-btn").onclick = async () => {
+  const roomRef = ref(database, `rooms/${roomId}`);
+  const snap = await get(roomRef);
+  if (!snap.exists()) return;
+  const data = snap.val();
+
+  if (data.settings.mode === "1v1") {
+    const updates = { status: "started" };
+    Object.entries(data.players || {}).forEach(([pid, p]) => {
+      if (p.seat === 1) {
+        updates[`players/${pid}/role`] = "主";
+      } else if (p.seat === 2) {
+        updates[`players/${pid}/role`] = "反";
+      }
+    });
+    await update(roomRef, updates);
+  } else {
+    await update(roomRef, { status: "started" });
+  }
 };
 
 // ⭐ 退出房間
@@ -309,12 +342,17 @@ async function joinRoom(roomId, playerName) {
     return;
   }
 
+  const data = snapshot.val();
+  const currentPlayers = data.players ? Object.keys(data.players).length : 0;
+  const seat = currentPlayers + 1;
+
   const uid = "player_" + Math.floor(Math.random() * 99999);
 
   await update(ref(database, `rooms/${roomId}/players/${uid}`), {
     name: playerName,
     hero: null,
-    ready: false
+    ready: false,
+    seat
   });
 
   return uid;
