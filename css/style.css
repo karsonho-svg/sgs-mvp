@@ -590,8 +590,15 @@ img {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 18px;
-  margin-top: 20px;
+  gap: 28px;          /* ⭐ 間距更平均 */
+  margin-top: 60px;   /* ⭐ 整體往下移 */
+}
+
+/* ⭐ 讓選將排列更平均置中 */
+.general-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 按鈕容器 */
@@ -611,4 +618,11 @@ img {
   transform: scale(0.55);
   transform-origin: top left;
   margin: 0;
+}
+
+/* ⭐ 武將選取金框（選將畫面用） */
+.general-selected {
+  outline: 5px solid gold;
+  outline-offset: -5px;
+  border-radius: 12px;
 }

@@ -421,8 +421,37 @@ function showGame(roomId, uid) {
       filtered.forEach(g => {
         const wrap = document.createElement("div");
         wrap.className = "general-option";
+
+        // ⭐ 點擊武將 → 金框選取
+        wrap.onclick = () => selectGeneral(g.id, wrap);
+
         wrap.appendChild(createGeneralCard(g));
         generalListEl.appendChild(wrap);
       });
     });
+}
+
+// ===========================
+// ⭐ 選將選取邏輯（多選）
+// ===========================
+let selectedGenerals = [];
+
+function selectGeneral(id, element) {
+  const maxSelect = Number(document.getElementById("lobby-gcount")?.textContent || 1);
+
+  // 若已選過 → 取消選取
+  if (selectedGenerals.includes(id)) {
+    selectedGenerals = selectedGenerals.filter(g => g !== id);
+    element.classList.remove("general-selected");
+    return;
+  }
+
+  // 若已達最大上限 → 不再新增
+  if (selectedGenerals.length >= maxSelect) {
+    return;
+  }
+
+  // 新選的
+  selectedGenerals.push(id);
+  element.classList.add("general-selected");
 }
