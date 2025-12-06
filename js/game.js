@@ -423,7 +423,7 @@ function showGame(roomId, uid) {
         wrap.className = "general-option";
 
         // ⭐ 點擊武將 → 金框選取
-        wrap.onclick = () => selectGeneral(g.id, wrap);
+        wrap.onclick = () => selectGeneral(g.id, wrap.firstElementChild);
 
         wrap.appendChild(createGeneralCard(g));
         generalListEl.appendChild(wrap);
