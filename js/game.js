@@ -1,6 +1,6 @@
 import { database } from "./firebase.js";
 import { ref, set, onValue, push, get, update } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
-import { renderCard, renderGeneral } from "./render.js";
+import { renderCard, renderGeneral, createGeneralCard } from "./render.js";
 import { deck } from "./deck.js";
 import { generals } from "./heroes.js";
 
@@ -421,7 +421,7 @@ function showGame(roomId, uid) {
       filtered.forEach(g => {
         const wrap = document.createElement("div");
         wrap.className = "general-option";
-        wrap.appendChild(renderGeneral(g));
+        wrap.appendChild(createGeneralCard(g));
         generalListEl.appendChild(wrap);
       });
     });

@@ -107,6 +107,43 @@ function renderGeneral(g) {
 
   addGeneralPressEffect(area.lastElementChild);
 }   // ←←←⭐⭐⭐ 這裡結束才對！⭐⭐⭐
+/* ===========================
+   ⭐ 選將專用卡片（回傳 DOM）
+   =========================== */
+function createGeneralCard(g) {
+  const frame = factionImageMap[g.kingdom];
+  const imgPath = `images/heroes/generals/biao_${g.id}.png`;
+
+  const currHp = g.maxHp;
+  const maxHp = g.maxHp;
+  const hpHTML = getHpDots(currHp, maxHp);
+
+  const skillText = g.skills
+    .map(s => `【${s.name}】${s.description}`)
+    .join("<br><br>");
+
+  const div = document.createElement("div");
+  div.className = "general-card";
+  div.style.backgroundImage = `url('images/photos/back/${frame}')`;
+  div.style.backgroundSize = "cover";
+
+  div.innerHTML = `
+    <div class="general-side">
+      <div class="general-name-vert">${g.name}</div>
+      <div class="hp-area">${hpHTML}</div>
+    </div>
+
+    <div class="general-main">
+      <div class="general-art-wrapper">
+        <img class="general-art" src="${imgPath}">
+      </div>
+      <div class="skill-box">${skillText}</div>
+    </div>
+  `;
+
+  addGeneralPressEffect(div);
+  return div;   // ⭐ 選將專用，務必回傳 DOM
+}
 function renderCard(card) {
   // 1️⃣ 花色顏色（紅心、方塊紅色，其他黑色）
   const suitColor = (card.suit === "♥" || card.suit === "♦") ? "red" : "black";
@@ -415,4 +452,4 @@ function addPressEffect(cardElement) {
   cardElement.addEventListener("touchend", cancelPress);
   cardElement.addEventListener("touchcancel", cancelPress);
 }
-export { renderCard, renderGeneral };
+export { renderCard, renderGeneral, createGeneralCard };
