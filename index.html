@@ -7,6 +7,7 @@
 </head>
 
 <body class="landing-bg">
+  <div id="ui-scale-wrapper">
   <h1>SGS-MVP</h1>
 
   <!-- 主 UI -->
@@ -104,14 +105,11 @@
      请将手机横向以开始游戏
   </div>
 
-  <!-- 🎮 4:3 固定比例外層容器 -->
-  <div id="game-wrapper" style="display:none;">
-    <div id="game-screen">
-      <div id="player-area"></div>
-      <div id="opponent-area"></div>
-      <div id="battlefield"></div>
-      <div id="hand-cards"></div>
-    </div>
+  <div id="game-screen" style="display:none;">
+    <div id="player-area"></div>
+    <div id="opponent-area"></div>
+    <div id="battlefield"></div>
+    <div id="hand-cards"></div>
   </div>
   <!-- 🔥 訪客輸入名稱的彈窗 -->
 <div id="name-modal-bg" class="modal-bg" style="display:none;"></div>
@@ -136,6 +134,7 @@
   <script>
     document.addEventListener("contextmenu", e => e.preventDefault());
   </script>
+  </div>
 
   <!-- Scripts -->
   <script type="module" src="js/firebase.js"></script>
