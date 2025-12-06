@@ -123,7 +123,7 @@ function createGeneralCard(g) {
     .join("<br><br>");
 
   const div = document.createElement("div");
-  div.className = "general-card";
+  div.className = "general-card general-card-small";
   div.style.backgroundImage = `url('images/photos/back/${frame}')`;
   div.style.backgroundSize = "cover";
 
