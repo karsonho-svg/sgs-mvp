@@ -176,8 +176,14 @@ function showLobby(roomId, uid) {
   // ===========================
   // ⭐ 更新設定資訊
   // ===========================
-  document.getElementById("lobby-mode").textContent = data.settings.mode;
-  document.getElementById("lobby-count").textContent = data.settings.count;
+  // ⭐ 1v1 顯示「1v1：2 人」，其他模式維持原本格式
+  if (data.settings.mode === "1v1") {
+    document.getElementById("lobby-mode").textContent = "1v1";
+    document.getElementById("lobby-count").textContent = "：2 人";
+  } else {
+    document.getElementById("lobby-mode").textContent = data.settings.mode;
+    document.getElementById("lobby-count").textContent = `：${data.settings.count} 人`;
+  }
   document.getElementById("lobby-pool").textContent = data.settings.pool.join("、");
   document.getElementById("lobby-gcount").textContent = data.settings.generalChoice;
   document.getElementById("lobby-playtime").textContent = data.settings.playTime + " 秒";
