@@ -40,9 +40,14 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: transparent;
-  background: none;  /* 手機寬高不符時，外面黑邊 */
+  background: #000;  /* 螢幕多出的部分一律黑邊 */
   font-family: "sgs-font1";
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 body.landing-bg {
@@ -55,11 +60,10 @@ body.landing-bg {
 /* 遊戲畫面自適應全螢幕（不再鎖固定比例） */
 #game-screen {
   display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  position: relative;
+  aspect-ratio: 4 / 3;                  /* 固定 4:3 比例 */
+  width: min(100vw, calc(100vh * 4 / 3));
+  max-height: 100vh;
   background-image: url("../images/background/game-bg.jpg");
   background-size: cover;
   background-position: center;
