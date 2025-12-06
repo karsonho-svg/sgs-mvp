@@ -249,11 +249,10 @@ function showLobby(roomId, uid) {
   startBtn.disabled = !(full && allReady);
 
 
-  // 🔥 遊戲開始 → 切換到遊戲畫面
+  // 🔥 遊戲開始 → 進入選將 / 遊戲流程（先隱藏大廳）
   if (data.status === "started") {
       document.getElementById("room-lobby").style.display = "none";
-      document.getElementById("game-screen").style.display = "block";
-
+      // 先進入 showGame，由 showGame 自己控制要顯示哪個畫面
       showGame(roomId, uid);
       return;
   }
@@ -415,8 +414,8 @@ function showGame(roomId, uid) {
       const settings = snap.val();
       const pool = settings.pool || [];
 
-      // 從 generals 中篩選出屬於底池的武將
-      const filtered = Object.values(generals).filter(g => pool.includes(g.pool));
+      // 先暫時渲染全部武將，之後再根據 pool 做篩選
+      const filtered = Object.values(generals);
 
       // 渲染每一張武將卡
       filtered.forEach(g => {
@@ -427,22 +426,3 @@ function showGame(roomId, uid) {
       });
     });
 }
-
-// 下面兩段可留可刪（取決於你要不要 debug 顯示全牌）
-// const deckRef = ref(database, 'deck');
-// onValue(deckRef, (snapshot) => {
-//   const deckData = snapshot.val();
-//   document.getElementById("card-area").innerHTML = "";
-//   Object.values(deckData).forEach(card => {
-//     renderCard(card);
-//   });
-// });
-
-// const generalsRef = ref(database, "generals");
-// onValue(generalsRef, snapshot => {
-//   const data = snapshot.val();
-//   document.getElementById("general-area").innerHTML = "";
-//   Object.values(data).forEach(g => {
-//     renderGeneral(g);
-//   });
-// });
