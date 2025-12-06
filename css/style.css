@@ -541,5 +541,7 @@ img {
 }
 
 #name-modal input {
-  margin-bottom: 16px;
+  width: 92%;
+  margin: 0 auto 16px;
+  display: block;
 }
