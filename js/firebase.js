@@ -18,7 +18,7 @@ import { connectDatabaseEmulator } from "https://www.gstatic.com/firebasejs/12.6
 export const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
 
-export { ref, set };
+export { ref, set, onValue };
 
 /* =========================================================
    ⭐ 上傳武將資料到 Firebase
@@ -34,4 +34,3 @@ export function uploadHeroes(heroesData) {
       console.error(" 上傳武將資料失敗：", err);
     });
 }
-export { ref, set };
