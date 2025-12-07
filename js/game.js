@@ -414,8 +414,8 @@ function showGame(roomId, uid) {
       const settings = snap.val();
       const pool = settings.pool || [];
 
-      // 先暫時渲染全部武將，之後再根據 pool 做篩選
-      const filtered = Object.values(generals);
+      // ⭐ 依底池篩選武將（只渲染玩家在創房時勾選的底池）
+      const filtered = Object.values(generals).filter(g => pool.includes(g.pool));
 
       // 渲染每一張武將卡
       filtered.forEach(g => {
