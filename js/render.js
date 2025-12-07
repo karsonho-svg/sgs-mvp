@@ -106,7 +106,7 @@ function renderGeneral(g) {
   area.insertAdjacentHTML("beforeend", html);
 
   addGeneralPressEffect(area.lastElementChild);
-}   // ←←←⭐⭐⭐ 這裡結束才對！⭐⭐⭐
+} 
 /* ===========================
    ⭐ 選將專用卡片（回傳 DOM）
    =========================== */
