@@ -25,7 +25,7 @@ export { ref, set, onValue };
    你在其他檔案可呼叫 uploadHeroes(heroesObject)
    ========================================================= */
 export function uploadHeroes(heroesData) {
-  const heroesRef = ref(database, "heroes");
+  const heroesRef = ref(database, "generals");
   return set(heroesRef, heroesData)
     .then(() => {
       console.log("武將資料已成功上傳到 Firebase");
