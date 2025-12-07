@@ -5,8 +5,8 @@ const generals = [
         kingdom: "蜀",
         maxHp: 4,
         gender: "male",
-        version: "standard",
-        edition: "",
+        pool: "standard",
+        edition: "biao",
         skills: [
           {
             name: "仁德",
@@ -24,8 +24,8 @@ const generals = [
         kingdom: "蜀",
         maxHp: 4,
         gender: "male",
-        version: "standard",
-        edition: "",
+        pool: "standard",
+        edition: "biao",
         skills: [
           {
             name: "武聖",
@@ -39,8 +39,8 @@ const generals = [
         kingdom: "蜀",
         maxHp: 4,
         gender: "male",
-        version: "standard",
-        edition: "",
+        pool: "standard",
+        edition: "biao",
         skills: [
           {
             name: "咆哮",
@@ -54,8 +54,8 @@ const generals = [
         kingdom: "蜀",
         maxHp: 3,
         gender: "male",
-        version: "standard",
-        edition: "",
+        pool: "standard",
+        edition: "biao",
         skills: [
           {
             name: "观星",
@@ -73,8 +73,8 @@ const generals = [
         kingdom: "蜀",
         maxHp: 4,
         gender: "male",
-        version: "standard",
-        edition: "",
+        pool: "standard",
+        edition: "biao",
         skills: [
           {
             name: "龍膽",
@@ -88,8 +88,8 @@ const generals = [
        kingdom: "蜀",
        maxHp: 4,
        gender: "male",
-       version: "standard",
-       edition: "",
+       pool: "standard",
+       edition: "biao",
        skills: [
          {
            name: "馬術",
@@ -107,8 +107,8 @@ const generals = [
       kingdom: "吳",
       maxHp: 4,
       gender: "male",
-      version: "standard",
-      edition: "",
+      pool: "standard",
+      edition: "biao",
       skills: [
        {
          name: "制衡",
@@ -126,8 +126,8 @@ const generals = [
        kingdom: "吳",
        maxHp: 4,
        gender: "male",
-       version: "standard",
-       edition: "",
+       pool: "standard",
+       edition: "biao",
        skills: [
         {
           name: "奇策",
@@ -141,8 +141,8 @@ const generals = [
       kingdom: "吳",
       maxHp: 4,
       gender: "male",
-      version: "standard",
-      edition: "",
+      pool: "standard",
+      edition: "biao",
       skills: [
         {
           name: "克己",
@@ -156,8 +156,8 @@ const generals = [
       kingdom: "吳",
       maxHp: 4,
       gender: "male",
-      version: "standard",
-      edition: "",
+      pool: "standard",
+      edition: "biao",
       skills: [
         {
           name: "苦肉",
@@ -171,8 +171,8 @@ const generals = [
       kingdom: "吳",
       maxHp: 3,
       gender: "male",
-      version: "standard",
-      edition: "",
+      pool: "standard",
+      edition: "biao",
       skills: [
        {
          name: "英姿",

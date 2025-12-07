@@ -3,6 +3,7 @@ import { ref, set, onValue, push, get, update } from "https://www.gstatic.com/fi
 import { renderCard, renderGeneral, createGeneralCard } from "./render.js";
 import { deck } from "./deck.js";
 import { generals } from "./heroes.js";
+import { uploadHeroes } from "./firebase.js";
 
 document.getElementById("create-room-btn").addEventListener("click", () => {
   showNameInput((playerName) => {
@@ -454,4 +455,17 @@ function selectGeneral(id, element) {
   // 新選的
   selectedGenerals.push(id);
   element.classList.add("general-selected");
+}
+
+// ===========================
+// ⭐ 一次性上傳所有武將到 Firebase
+// ===========================
+export function uploadAllHeroes() {
+  const heroesMap = {};
+  generals.forEach(g => {
+    heroesMap[g.id] = g;
+  });
+
+  uploadHeroes(heroesMap);
+  console.log("已執行 uploadAllHeroes()，請到 Firebase 查看 heroes 節點。");
 }

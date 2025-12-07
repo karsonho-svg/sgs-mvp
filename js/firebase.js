@@ -17,3 +17,21 @@ import { connectDatabaseEmulator } from "https://www.gstatic.com/firebasejs/12.6
 
 export const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
+
+export { ref, set };
+
+/* =========================================================
+   ⭐ 上傳武將資料到 Firebase
+   你在其他檔案可呼叫 uploadHeroes(heroesObject)
+   ========================================================= */
+export function uploadHeroes(heroesData) {
+  const heroesRef = ref(database, "heroes");
+  return set(heroesRef, heroesData)
+    .then(() => {
+      console.log("武將資料已成功上傳到 Firebase");
+    })
+    .catch(err => {
+      console.error(" 上傳武將資料失敗：", err);
+    });
+}
+export { ref, set };
