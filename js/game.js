@@ -427,17 +427,15 @@ function showGame(roomId, uid) {
 
     // （之後會逐步加入武將 / 手牌 / 回合資訊顯示）
 
-    // ⭐ 根據選將底池渲染武將列表
+    // ⭐ 根據選將池渲染武將列表（只顯示自己的隨機選項）
     const generalListEl = document.getElementById("general-list");
     generalListEl.innerHTML = "";
 
-    const settingsRef = ref(database, `rooms/${roomId}/settings`);
-    get(settingsRef).then(snap => {
+    const roomRef = ref(database, `rooms/${roomId}`);
+    get(roomRef).then(snap => {
       if (!snap.exists()) return;
-      const settings = snap.val();
-      const pool = settings.pool || [];
+      const room = snap.val();
 
-      // ⭐ 只渲染屬於自己的 random 選將池
       const myPoolIds = (room.generalPool && room.generalPool[uid]) || [];
       const filtered = Object.values(generals).filter(g => myPoolIds.includes(g.id));
 
