@@ -275,8 +275,31 @@ document.getElementById("start-game-btn").onclick = async () => {
   if (!snap.exists()) return;
   const data = snap.val();
 
+  // ===========================
+  // ⭐ 建立選將池（每位玩家 N 張）
+  // ===========================
+  const pool = data.settings.pool || [];
+  const choiceCount = Number(data.settings.generalChoice || 1);
+
+  // 濾出底池內的所有武將
+  let available = Object.values(generals).filter(g => pool.includes(g.pool));
+
+  // 洗牌
+  available = available.sort(() => Math.random() - 0.5);
+
+  // 建立 per‑player 選將池
+  const generalPool = {};
+  Object.keys(data.players).forEach(pid => {
+    const picks = available.splice(0, choiceCount).map(g => g.id);
+    generalPool[pid] = picks;
+  });
+
+  // ===========================
+  // ⭐ 寫入選將池並開始遊戲
+  // ===========================
+  const updates = { generalPool, status: "started" };
+
   if (data.settings.mode === "1v1") {
-    const updates = { status: "started" };
     Object.entries(data.players || {}).forEach(([pid, p]) => {
       if (p.seat === 1) {
         updates[`players/${pid}/role`] = "主";
@@ -284,10 +307,9 @@ document.getElementById("start-game-btn").onclick = async () => {
         updates[`players/${pid}/role`] = "反";
       }
     });
-    await update(roomRef, updates);
-  } else {
-    await update(roomRef, { status: "started" });
   }
+
+  await update(roomRef, updates);
 };
 
 // ⭐ 退出房間
@@ -415,8 +437,9 @@ function showGame(roomId, uid) {
       const settings = snap.val();
       const pool = settings.pool || [];
 
-      // ⭐ 依底池篩選武將（只渲染玩家在創房時勾選的底池）
-      const filtered = Object.values(generals).filter(g => pool.includes(g.pool));
+      // ⭐ 只渲染屬於自己的 random 選將池
+      const myPoolIds = (room.generalPool && room.generalPool[uid]) || [];
+      const filtered = Object.values(generals).filter(g => myPoolIds.includes(g.id));
 
       // 渲染每一張武將卡
       filtered.forEach(g => {
@@ -435,25 +458,13 @@ function showGame(roomId, uid) {
 // ===========================
 // ⭐ 選將選取邏輯（多選）
 // ===========================
-let selectedGenerals = [];
+let selectedGeneral = null;
 
 function selectGeneral(id, element) {
-  const maxSelect = Number(document.getElementById("lobby-gcount")?.textContent || 1);
+  document.querySelectorAll(".general-selected")
+    .forEach(el => el.classList.remove("general-selected"));
 
-  // 若已選過 → 取消選取
-  if (selectedGenerals.includes(id)) {
-    selectedGenerals = selectedGenerals.filter(g => g !== id);
-    element.classList.remove("general-selected");
-    return;
-  }
-
-  // 若已達最大上限 → 不再新增
-  if (selectedGenerals.length >= maxSelect) {
-    return;
-  }
-
-  // 新選的
-  selectedGenerals.push(id);
+  selectedGeneral = id;
   element.classList.add("general-selected");
 }
 

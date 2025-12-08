@@ -146,14 +146,14 @@ img {
 
 /* 名字直排 */
 .general-name-vert {
-  font-family: "sgs-font1";
+  font-family: "sgs-font2";
   writing-mode: vertical-rl;
   text-orientation: upright;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 900;
   color: white;
   position: absolute;
-  left: 5px;
+  left: 7px;
   top: 80px;   /* 往下移一點 */
 }
 
