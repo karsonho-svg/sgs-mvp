@@ -150,6 +150,9 @@ await set(ref(database, "rooms/" + roomId), {
   showLobby(roomId, uid);
 });
 function showLobby(roomId, uid) {
+  // ⭐ 回到大廳 → 恢復大廳背景
+  document.body.classList.add("landing-bg");
+
   const lobby = document.getElementById("room-lobby");
   lobby.style.display = "block";
   document.getElementById("lobby-room-id").textContent = roomId;
@@ -422,6 +425,10 @@ function showNameInput(callback) {
 // ===========================
 function showGame(roomId, uid) {
     console.log("Game started for:", uid);
+
+    // ⭐ 進入遊戲 → 移除大廳背景
+    document.body.classList.remove("landing-bg");
+
     // ⭐ 顯示選將畫面
     document.getElementById("choose-general-screen").style.display = "block";
 
