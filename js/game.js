@@ -7,7 +7,6 @@ import { uploadHeroes } from "./firebase.js";
 
 document.getElementById("create-room-btn").addEventListener("click", () => {
   showNameInput((playerName) => {
-    // 存起來等下建立房間時用
     window.tempCreatorName = playerName;
 
     // 打開房間設定彈窗
