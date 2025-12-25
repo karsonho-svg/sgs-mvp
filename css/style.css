@@ -146,7 +146,7 @@ img {
 
 /* 名字直排 */
 .general-name-vert {
-  font-family: "sgs-font2";
+  font-family: "sgs-font1";
   writing-mode: vertical-rl;
   text-orientation: upright;
   font-size: 28px;
@@ -397,7 +397,7 @@ img {
 /* 右側容器（紅色區域） */
 /* 右側容器（紅色區域） */
 .general-main {
-  width: 120%;
+  width: 100%;
   height: 100%;
   position: relative;
   overflow: hidden; 
