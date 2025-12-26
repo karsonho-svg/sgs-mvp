@@ -73,7 +73,7 @@ function addGeneralPressEffect(cardElement) {
 function renderGeneral(g) {
 
   const frame = factionImageMap[g.kingdom];
-  const imgPath = `images/heroes/generals/biao_${g.id}.png`;
+  const imgPath = `images/heroes/generals/${g.edition}_generals/${g.edition}_${g.id}.png`;
 
   const currHp = g.maxHp;
   const maxHp = g.maxHp;

@@ -37,3 +37,9 @@ export function uploadHeroes(heroesData) {
       throw err;
     });
 }
+
+/* 
+import("/sgs-mvp/js/heroes.js").then(h => {
+  console.log(h);
+}); 
+*/
