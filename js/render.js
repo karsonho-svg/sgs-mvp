@@ -74,6 +74,8 @@ function renderGeneral(g) {
 
   const frame = factionImageMap[g.kingdom];
   const imgPath = `images/heroes/generals/${g.edition}_generals/${g.edition}_${g.id}.png`;
+  const artX = (g.artX ?? 60);
+  const artY = (g.artY ?? 40);
 
   const currHp = g.maxHp;
   const maxHp = g.maxHp;
@@ -94,7 +96,7 @@ function renderGeneral(g) {
 
       <div class="general-main">
         <div class="general-art-wrapper">
-          <img class="general-art" src="${imgPath}">
+          <img class="general-art" src="${imgPath}" style="object-position:${artX}% ${artY}%;">
         </div>
         <div class="skill-box">${skillText}</div>
       </div>
@@ -113,6 +115,7 @@ function renderGeneral(g) {
 function createGeneralCard(g) {
   const frame = factionImageMap[g.kingdom];
   const imgPath = `images/heroes/generals/${g.edition}_generals/${g.edition}_${g.id}.png`;
+  const artX = (g.artX ?? 60), artY = (g.artY ?? 40);
 
   const currHp = g.maxHp;
   const maxHp = g.maxHp;
@@ -135,7 +138,7 @@ function createGeneralCard(g) {
 
     <div class="general-main">
       <div class="general-art-wrapper">
-        <img class="general-art" src="${imgPath}">
+        <img class="general-art" src="${imgPath}" style="object-position:${artX}% ${artY}%;">
       </div>
       <div class="skill-box">${skillText}</div>
     </div>
